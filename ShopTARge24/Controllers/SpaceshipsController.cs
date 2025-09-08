@@ -39,6 +39,13 @@ namespace ShopTARge24.Controllers
             return View("Create", result);
         }
 
+        [HttpPost]
+
+       // public async Task<IActionResult> Create()
+       // {
+
+       // }
+
         
     }
 }
