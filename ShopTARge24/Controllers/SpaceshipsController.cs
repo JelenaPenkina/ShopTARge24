@@ -24,7 +24,8 @@ namespace ShopTARge24.Controllers
                     Id = x.Id,
                     Name = x.Name,
                     Classification = x.Classification,
-                    BuiltDate = x.BuiltDate
+                    BuiltDate = x.BuiltDate,
+                    Crew = x.Crew
                 });
 
             return View(result);
