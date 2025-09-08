@@ -30,5 +30,7 @@ namespace ShopTARge24.Controllers
 
             return View(result);
         }
+
+        
     }
 }
