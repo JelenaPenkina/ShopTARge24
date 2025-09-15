@@ -8,6 +8,8 @@ using ShopTARge24.Models.Spaceships;
 
 namespace ShopTARge24.Controllers
 {
+
+    // F11 näitab kogu koodi järjestuse
     public class SpaceshipsController : Controller
     {
         private readonly ShopTARge24Context _context;
@@ -168,6 +170,19 @@ namespace ShopTARge24.Controllers
 
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            // kasutada service klassi meetodit, et info kätte saada
+
+            var result = await _context.Spaceships
+              .FirstOrDefaultAsync(x => x.Id == id);
+
+            // toimub viewModeliga mappimine
+
+
         }
     }
 }
