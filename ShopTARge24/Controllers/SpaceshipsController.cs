@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using ShopTARge24.Core.Domain;
 using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
@@ -176,12 +177,32 @@ namespace ShopTARge24.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             // kasutada service klassi meetodit, et info kätte saada
+            var spaceship = await _spaceshipServices.DetailAsync(id);
 
-            var result = await _context.Spaceships
-              .FirstOrDefaultAsync(x => x.Id == id);
-
+            if (spaceship == null)
+            {
+                return NotFound();
+            }
             // toimub viewModeliga mappimine
+            var vm = new SpaceshipDetailsViewModel();
 
+            vm.Id = spaceship.Id;
+            vm.Name = spaceship.Name;
+            vm.Classification = spaceship.Classification;
+            vm.BuiltDate = spaceship.BuiltDate;
+            vm.Crew = spaceship.Crew;
+            vm.EnginePower = spaceship.EnginePower;
+            vm.CreatedAt = spaceship.CreatedAt;
+            vm.ModifiedAt = spaceship.ModifiedAt;
+
+
+
+            // minu versioon ->  var vm = await _context.Spaceships
+            //                   .FirstOrDefaultAsync(x => x.Id == id);
+
+            // _context.Spaceships.GetService(id);
+            // await _context.SaveChangesAsync();
+            // return View(vm);
 
         }
     }
