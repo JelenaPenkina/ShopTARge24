@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShopTARge24.Core.Domain;
 using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
@@ -93,6 +95,39 @@ namespace ShopTARge24.Controllers
             vm.ModifiedAt = spaceship.ModifiedAt;
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<Spaceships> DeleteConfirmation(Guid id)
+        {
+            var spaceship = await _spaceshipServices.Delete(id);
+
+            if (spaceship == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<Spaceships> DetailAsync(Guid id)
+        {
+            var result = await _context.Spaceships
+                .FirstOrDefaultAsync(x  => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<Spaceships> Delete(Guid id)
+        {
+            // Leida ülesse soovitud rida, mida soovite kustutada,
+            var result = await _context.Spaceships
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            // kui rida on leitud, siis eemaldage andmebaasist
+            _context.Spaceships.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result; 
         }
     }
 }

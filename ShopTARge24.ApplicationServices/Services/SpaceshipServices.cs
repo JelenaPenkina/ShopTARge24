@@ -1,4 +1,6 @@
-﻿using ShopTARge24.Core.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopTARge24.Core.Domain;
+using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
 

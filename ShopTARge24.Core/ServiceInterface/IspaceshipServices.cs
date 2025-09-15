@@ -8,5 +8,7 @@ namespace ShopTARge24.Core.ServiceInterface
     {
         Task<Spaceships> Create(SpaceshipDto dto);
         Task<Spaceships> DetailAsync(Guid id);
+
+        Task<Spaceships> Delete(Guid id);
     }
 }
