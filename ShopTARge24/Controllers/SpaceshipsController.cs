@@ -100,16 +100,17 @@ namespace ShopTARge24.Controllers
         public async Task<IActionResult> Update(SpaceshipCreateUpdateViewModel vm)
         {
             //Tuleb dto ja vm omavahel ära mappida 
-            var dto = new SpaceshipDto();
-
-            vm.Id = dto.Id;
-            vm.Name = dto.Name;
-            vm.Classification = dto.Classification;
-            vm.BuiltDate = dto.BuiltDate;
-            vm.Crew = dto.Crew;
-            vm.EnginePower = dto.EnginePower;
-            vm.CreatedAt = dto.CreatedAt;
-            vm.ModifiedAt = dto.ModifiedAt;
+            var dto = new SpaceshipDto()
+            {
+                Id = vm.Id,
+                Name = vm.Name,
+                Classification = vm.Classification,
+                BuiltDate = vm.BuiltDate,
+                Crew = vm.Crew,
+                EnginePower = vm.EnginePower,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt
+            };
 
             var result = await _spaceshipServices.Update(dto);
 

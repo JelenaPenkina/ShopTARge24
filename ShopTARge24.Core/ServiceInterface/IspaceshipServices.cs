@@ -11,6 +11,6 @@ namespace ShopTARge24.Core.ServiceInterface
 
         Task<Spaceships> Delete(Guid id);
 
-        Task<Spaceships> Update(Guid id);
+        Task<Spaceships> Update(SpaceshipDto dto);
     }
 }
