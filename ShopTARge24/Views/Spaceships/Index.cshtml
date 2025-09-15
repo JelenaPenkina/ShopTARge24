@@ -32,6 +32,10 @@
 					<td>@spaceship.Classification</td>
 					<td>@spaceship.BuiltDate</td>
 					<td>@spaceship.Crew</td>
+					<td>
+						<input asp-action="update" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Update" />
+						<input asp-action="delete" asp-controller="spaceships" type="submit" class=" btn btn-primary" value="Delete" />
+					</td>
 				</tr>	
 				rowNumber += 1;
 			}

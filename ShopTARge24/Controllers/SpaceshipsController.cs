@@ -42,14 +42,14 @@ namespace ShopTARge24.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            SpaceshipCreateViewModel result = new();
+            SpaceshipCreateUpdateViewModel result = new();
 
-            return View("Create", result);
+            return View("CreateUpdate", result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(SpaceshipCreateViewModel vm)
+        public async Task<IActionResult> Create(SpaceshipCreateUpdateViewModel vm)
         {
             var dto = new SpaceshipDto()
             {
@@ -74,6 +74,65 @@ namespace ShopTARge24.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var spaceship = await _spaceshipServices.DetailAsync(id);
+
+            if (spaceship == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new SpaceshipCreateUpdateViewModel();
+
+            vm.Id = spaceship.Id;
+            vm.Name = spaceship.Name;
+            vm.Classification = spaceship.Classification;
+            vm.BuiltDate = spaceship.BuiltDate;
+            vm.Crew = spaceship.Crew;
+            vm.EnginePower = spaceship.EnginePower;
+            vm.CreatedAt = spaceship.CreatedAt;
+            vm.ModifiedAt = spaceship.ModifiedAt;
+
+            return View("CreateUpdate", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(SpaceshipCreateUpdateViewModel vm)
+        {
+            //Tuleb dto ja vm omavahel ära mappida 
+            var dto = new SpaceshipDto();
+
+            vm.Id = dto.Id;
+            vm.Name = dto.Name;
+            vm.Classification = dto.Classification;
+            vm.BuiltDate = dto.BuiltDate;
+            vm.Crew = dto.Crew;
+            vm.EnginePower = dto.EnginePower;
+            vm.CreatedAt = dto.CreatedAt;
+            vm.ModifiedAt = dto.ModifiedAt;
+
+            var result = await _spaceshipServices.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+            // MINU VERSIOON -> 
+            //  var vm = await _spaceshipServices.Update(dto);
+
+            //  if (vm == null)
+            //  {
+            //      return RedirectToAction(nameof(Index));
+            //  }
+
+            //  return RedirectToAction(nameof(Index));
+
+     
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var spaceship = await _spaceshipServices.DetailAsync(id);
@@ -96,9 +155,8 @@ namespace ShopTARge24.Controllers
 
             return View(vm);
         }
-
         [HttpPost]
-        public async Task<Spaceships> DeleteConfirmation(Guid id)
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
             var spaceship = await _spaceshipServices.Delete(id);
 
@@ -107,27 +165,8 @@ namespace ShopTARge24.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+
             return RedirectToAction(nameof(Index));
-        }
-        public async Task<Spaceships> DetailAsync(Guid id)
-        {
-            var result = await _context.Spaceships
-                .FirstOrDefaultAsync(x  => x.Id == id);
-
-            return result;
-        }
-
-        public async Task<Spaceships> Delete(Guid id)
-        {
-            // Leida ülesse soovitud rida, mida soovite kustutada,
-            var result = await _context.Spaceships
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            // kui rida on leitud, siis eemaldage andmebaasist
-            _context.Spaceships.Remove(result);
-            await _context.SaveChangesAsync();
-
-            return result; 
         }
     }
 }
