@@ -204,6 +204,8 @@ namespace ShopTARge24.Controllers
             // await _context.SaveChangesAsync();
             // return View(vm);
 
+            return View(vm);
+
         }
     }
 }

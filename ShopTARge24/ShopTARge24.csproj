@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>839578b9-dda0-4470-b703-b695704588c6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShopTARge24.ApplicationServices\ShopTARge24.ApplicationServices.csproj" />
     <ProjectReference Include="..\ShopTARge24.Data\ShopTARge24.Data.csproj" />
   </ItemGroup>
 
