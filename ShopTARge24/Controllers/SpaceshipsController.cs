@@ -195,7 +195,7 @@ namespace ShopTARge24.Controllers
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
 
-
+            return View(vm);
 
             // minu versioon ->  var vm = await _context.Spaceships
             //                   .FirstOrDefaultAsync(x => x.Id == id);

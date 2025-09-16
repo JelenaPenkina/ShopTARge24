@@ -58,5 +58,26 @@ namespace ShopTARge24.ApplicationServices.Services
 
             return result;
         }
+
+        public async Task<Spaceships> Update(SpaceshipDto dto)
+        {
+            //vaja leida doamini objekt, mida saaks mappida dto-ga
+            Spaceships spaceships = new Spaceships();
+
+            spaceships.Id = dto.Id;
+            spaceships.Name = dto.Name;
+            spaceships.Classification = dto.Classification;
+            spaceships.BuiltDate = dto.BuiltDate;
+            spaceships.Crew = dto.Crew;
+            spaceships.EnginePower = dto.EnginePower;
+            spaceships.CreatedAt = dto.CreatedAt;
+            spaceships.ModifiedAt = DateTime.Now;
+
+            //tuleb db-s teha andmete uuendamine jauue oleku salvestamine
+            _context.Spaceships.Update(spaceships);
+            await _context.SaveChangesAsync();
+
+            return spaceships;
+        }
     }
 }

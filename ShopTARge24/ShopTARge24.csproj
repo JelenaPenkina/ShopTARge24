@@ -15,7 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShopTARge24.ApplicationServices\ShopTARge24.ApplicationServices.csproj" />
     <ProjectReference Include="..\ShopTARge24.Data\ShopTARge24.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Kindergarten\" />
+    <Folder Include="Views\Kindergarten\" />
   </ItemGroup>
 
 </Project>
