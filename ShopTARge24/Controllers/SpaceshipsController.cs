@@ -65,6 +65,13 @@ namespace ShopTARge24.Controllers
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
                 Files = vm.Files, // FileToApi klassist kutsume välja ning lisasime CreateUpdate modellisse juurde
+                FileToApiDtos = vm.Image
+                    .Select(x => new FileToApiDto
+                    {
+                        Id = x.ImageId,
+                        ExistingFilePath = x.Filepath, 
+                        SpaceshipId = x.SpaceshipId
+                    }).ToArray()
             };
 
             var result = await _spaceshipServices.Create(dto);

@@ -1,5 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* _ -> alakriips pealkirjas tähendab osavaadet ehk pole main vaade*@
+
+@model ShopTARge24.Models.Spaceships.ImageViewModel
+
 @{
+	var photoPaths = "~/multipleFileUpload/" + (Model.Filepath ?? "noimage.jpg");
 }
+
+<div class="form-group row col-sm-4 offset-2">
+	<div>@Model.Filepath</div>
+	<img class="card-image-top" src="@photoPaths" asp-append-version="true"/>
+</div>
