@@ -21,15 +21,17 @@ namespace ShopTARge24.ApplicationServices.Services
 
             public async Task<Kindergarten> Create(KindergartenDto dto)
             {
-                Kindergarten kindergarten = new Kindergarten();
+                var kindergarten = new Kindergarten
+                {
+                    Id = Guid.NewGuid(),
+                    GroupName = dto.GroupName,
+                    ChildrenCount = dto.ChildrenCount,
+                    KindergartenName = dto.KindergartenName,
+                    TeacherName = dto.TeacherName,
 
-                kindergarten.KindergartenName = dto.KindergartenName;
-                kindergarten.GroupName = dto.GroupName;
-                kindergarten.TeacherName = dto.TeacherName;
-                kindergarten.ChildrenCount = dto.ChildrenCount;
-
-                kindergarten.CreatedAt = DateTime.Now;
-                kindergarten.UpdatedAt = DateTime.Now;
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
 
                 await _context.Kindergarten.AddAsync(kindergarten);
                 await _context.SaveChangesAsync();
@@ -67,16 +69,17 @@ namespace ShopTARge24.ApplicationServices.Services
 
             public async Task<Kindergarten> Delete(Guid id)
             {
-                //leida ülesse konkreetne soovitud rida, mida soovite kustutada
-                var result = await _context.Kindergarten
-                    .FirstOrDefaultAsync(x => x.Id == id);
+                var kindergarten = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
 
+                if (kindergarten == null)
+                {
+                    return null;
+                }
 
-                //kui rida on leitud, siis eemaldage andmebaasist
-                _context.Kindergarten.Remove(result);
+                _context.Kindergarten.Remove(kindergarten);
                 await _context.SaveChangesAsync();
 
-                return result;
+                return kindergarten;
             }
         }
     }

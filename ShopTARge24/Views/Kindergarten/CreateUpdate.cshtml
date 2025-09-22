@@ -1,10 +1,18 @@
 ﻿@model ShopTARge24.Models.Kindergarten.KindergartenCreateUpdateViewModel
 
+@if (Model.Id.HasValue)
+{
+	<h1>Update</h1>
+}
+else
+{
+	<h1>Create</h1>
+}
 
 <h1>CreateUpdate</h1>
 
 <div>
-	<form method="post" enctype="mulitpart"></form>
+	<form method="post" enctype="mulitpart">
 	<input asp-for="Id" type="hidden" />
 	<input asp-for="CreatedAt" type="hidden"/>
 	<input asp-for="UpdatedAt" type="hidden" />
@@ -62,5 +70,5 @@
 	}
 
 	<a asp-action="Index" asp-controller="kindergarten" class="btn btn-success">Back</a>
-
+	</form>
 </div>

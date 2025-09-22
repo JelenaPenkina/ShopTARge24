@@ -46,30 +46,25 @@ namespace ShopTARge24.Controllers
         }
 
 
+
         [HttpPost]
         public async Task<IActionResult> Create(KindergartenCreateUpdateViewModel vm)
         {
-            var dto = new KindergartenDto()
+            var dto = new KindergartenDto
             {
                 Id = vm.Id,
-                KindergartenName = vm.KindergartenName,
                 GroupName = vm.GroupName,
-                TeacherName = vm.TeacherName,
                 ChildrenCount = vm.ChildrenCount,
-                
+                KindergartenName = vm.KindergartenName,
+                TeacherName = vm.TeacherName,
                 CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt,
+                UpdatedAt = vm.UpdatedAt
             };
 
-            var result = await _kindergartenServices.Create(dto);
-
-            if (result == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
+            await _kindergartenServices.Create(dto);
             return RedirectToAction(nameof(Index));
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
@@ -98,25 +93,18 @@ namespace ShopTARge24.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(KindergartenCreateUpdateViewModel vm)
         {
-            var dto = new KindergartenDto()
+            var dto = new KindergartenDto
             {
                 Id = vm.Id,
-                KindergartenName = vm.KindergartenName,
                 GroupName = vm.GroupName,
-                TeacherName = vm.TeacherName,
                 ChildrenCount = vm.ChildrenCount,
-
+                KindergartenName = vm.KindergartenName,
+                TeacherName = vm.TeacherName,
                 CreatedAt = vm.CreatedAt,
-                UpdatedAt = vm.UpdatedAt,
+                UpdatedAt = vm.UpdatedAt
             };
 
-            var result = await _kindergartenServices.Update(dto);
-
-            if (result == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
+            await _kindergartenServices.Update(dto);
             return RedirectToAction(nameof(Index));
         }
 
@@ -147,14 +135,7 @@ namespace ShopTARge24.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
-            var kindergarten = await _kindergartenServices.Delete(id);
-
-            if (kindergarten == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-
+            await _kindergartenServices.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
