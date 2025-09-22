@@ -9,13 +9,17 @@ namespace ShopTARge24.ApplicationServices.Services
     public class SpaceshipServices : ISpaceshipServices
     {
         private readonly ShopTARge24Context _context;
+        private readonly IFileServices _fileServices;
 
         public SpaceshipServices
             (
-                ShopTARge24Context context
+                ShopTARge24Context context,
+                IFileServices fileServices
+
             )
         {
             _context = context;
+            _fileServices = fileServices; 
         }
 
         public async Task<Spaceships> Create(SpaceshipDto dto)
@@ -30,6 +34,10 @@ namespace ShopTARge24.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = DateTime.Now;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships); // kutsun välja meetodi FilesToApi klassist
+
+           //  FileToApi.ReferenceEquals(dto, null); uurida, et mida see kood teeb 
+            
 
             await _context.Spaceships.AddAsync(spaceships);
             await _context.SaveChangesAsync();
