@@ -2,6 +2,7 @@ using ShopTARge24.Data;
 using Microsoft.EntityFrameworkCore;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.ApplicationServices.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(
+//        Path.Combine(builder.Environment.ContentRootPath, "ExtraStaticFiles")),
+//    RequestPath = "/static-files"
+//});
 
 app.MapControllerRoute(
     name: "default",
