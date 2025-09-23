@@ -3,6 +3,8 @@ using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using Microsoft.Extensions.Hosting;
 using ShopTARge24.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopTARge24.ApplicationServices.Services
 {
@@ -50,5 +52,29 @@ namespace ShopTARge24.ApplicationServices.Services
                 }
             }
         }
+
+        public async Task<FileToApi> RemoveImageFromApi(FileToApi dto)
+        {
+            // kui soovin kustutada, siis pean läbi Id pildi ülesse otsima
+            var imageId = await _context.FileToApis
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            // kus asuvad pildid, mida hakatakse kustutama
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+                + imageId.ExistingFilePath;
+
+            if (File.Exists(filePath)) 
+            {
+                File.Delete(filePath);
+            }
+
+            _context.FileToApis.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return null;
+ 
+        }
+
     }
 }
+
