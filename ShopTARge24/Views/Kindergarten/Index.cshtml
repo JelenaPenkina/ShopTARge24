@@ -40,9 +40,10 @@
                         <div class="btn-group" role="group">
                             <a asp-action="details" asp-controller="kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary btn-sm">Details</a>
                             <a asp-action="update" asp-controller="kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary btn-sm">Update</a>
-                            <form asp-action="delete" asp-route-id="@kindergarten.Id" method="post" class="d-inline">
+                            <a asp-action="Delete" asp-controller="Kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-danger btn-sm">Delete</a>
+                           @*  <form asp-action="delete" asp-route-id="@kindergarten.Id" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            </form> *@
                         </div>
                        
                         @* <a asp-action="delete" asp-controller="kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger">Delete</a> *@

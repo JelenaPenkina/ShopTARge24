@@ -29,8 +29,8 @@ namespace ShopTARge24.ApplicationServices.Services
                     KindergartenName = dto.KindergartenName,
                     TeacherName = dto.TeacherName,
 
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    CreatedAt = dto.CreatedAt,  // DateTime - kui kaustada sellist meetodit, siis kasutaja ei saa ise midagi sisestada, kui see on soovitatav
+                    UpdatedAt = dto.UpdatedAt
                 };
 
                 await _context.Kindergarten.AddAsync(kindergarten);
@@ -41,18 +41,22 @@ namespace ShopTARge24.ApplicationServices.Services
 
             public async Task<Kindergarten> Update(KindergartenDto dto)
             {
-                //vaja leida doamini objekt, mida saaks mappida dto-ga
-                Kindergarten kindergarten = new Kindergarten();
+                var kindergarten = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+                if (kindergarten == null)
+                {
+                    return null; // või throw exception saab kasutada ka siin
+                }
 
                 kindergarten.KindergartenName = dto.KindergartenName;
                 kindergarten.GroupName = dto.GroupName;
                 kindergarten.TeacherName = dto.TeacherName;
                 kindergarten.ChildrenCount = dto.ChildrenCount;
 
-                kindergarten.CreatedAt = DateTime.Now;
-                kindergarten.UpdatedAt = DateTime.Now;
+                kindergarten.CreatedAt = dto.CreatedAt;
+                kindergarten.UpdatedAt = dto.UpdatedAt;
 
-            //tuleb db-s teha andmete uuendamine jauue oleku salvestamine
+            
                 _context.Kindergarten.Update(kindergarten);
                 await _context.SaveChangesAsync();
 
