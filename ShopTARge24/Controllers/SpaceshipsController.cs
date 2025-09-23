@@ -191,6 +191,19 @@ namespace ShopTARge24.Controllers
             {
                 return NotFound();
             }
+
+            // Selle koodiga lisame details vaatese ka pildi vaateid ehk kasutaja poolt
+            // lisatud pildid on nüüd nähtavad.
+             
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new ImageViewModel
+                {
+                    Filepath = y.ExistingFilePath,
+                    ImageId = y.Id
+
+                }).ToArrayAsync();
+
             // toimub viewModeliga mappimine
             var vm = new SpaceshipDetailsViewModel();
 
@@ -202,6 +215,9 @@ namespace ShopTARge24.Controllers
             vm.EnginePower = spaceship.EnginePower;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
+
+            // AddRange - annab võimaluse mitme pildi lisamisele. Peab lisama pärast funktsiooni kirjutamist.
+            vm.Images.AddRange(images);
 
             return View(vm);
 
