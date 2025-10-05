@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopTARge24.Core.Domain
+﻿namespace ShopTARge24.Models.RealEstate
 {
-    public class RealEstate
+    public class RealEstateCreateUpdateViewModel
     {
         public Guid? Id { get; set; }
         public double? Area { get; set; }

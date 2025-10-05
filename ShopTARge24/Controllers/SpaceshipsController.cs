@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ShopTARge24.ApplicationServices.Services;
 using ShopTARge24.Core.Domain;
 using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
 using ShopTARge24.Models.Spaceships;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopTARge24.Controllers
 {
@@ -15,15 +17,17 @@ namespace ShopTARge24.Controllers
     {
         private readonly ShopTARge24Context _context;
         private readonly ISpaceshipServices _spaceshipServices;
-
+        private readonly IFileServices _fileServices;
         public SpaceshipsController
             (
                 ShopTARge24Context context,
-                ISpaceshipServices spaceshipServices
+                ISpaceshipServices spaceshipServices,
+                IFileServices fileServices
             )
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
+            _fileServices = fileServices;
         }
 
 
@@ -211,17 +215,13 @@ namespace ShopTARge24.Controllers
                 return NotFound();
             }
 
-            // Selle koodiga lisame details vaatese ka pildi vaateid ehk kasutaja poolt
-            // lisatud pildid on nüüd nähtavad.
-             
             var images = await _context.FileToApis
-                .Where(x => x.SpaceshipId == id)
-                .Select(y => new ImageViewModel
-                {
-                    Filepath = y.ExistingFilePath,
-                    ImageId = y.Id
-
-                }).ToArrayAsync();
+              .Where(x => x.SpaceshipId == id)
+              .Select(y => new ImageViewModel
+              {
+                  Filepath = y.ExistingFilePath,
+                  ImageId = y.Id
+              }).ToArrayAsync();
 
             // toimub viewModeliga mappimine
             var vm = new SpaceshipDetailsViewModel();
@@ -234,8 +234,6 @@ namespace ShopTARge24.Controllers
             vm.EnginePower = spaceship.EnginePower;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.ModifiedAt = spaceship.ModifiedAt;
-
-            // AddRange - annab võimaluse mitme pildi lisamisele. Peab lisama pärast funktsiooni kirjutamist.
             vm.Images.AddRange(images);
 
             return View(vm);
@@ -248,5 +246,29 @@ namespace ShopTARge24.Controllers
             // return View(vm);
 
         }
+
+
+        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
+        {
+            //tuleb ühendada dto ja vm
+            //Id peab saama edastatud andmebaasi
+            var dto = new FileToApiDto()
+            {
+                Id = vm.ImageId
+            };
+
+            //kutsu välja vastav serviceclassi meetod
+            var image = await _fileServices.RemoveImageFromApi(dto);
+
+            //kui on null, siis vii Index vaatesse
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
+
 }

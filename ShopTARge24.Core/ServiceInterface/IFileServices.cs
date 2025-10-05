@@ -7,7 +7,8 @@ namespace ShopTARge24.Core.ServiceInterface
     {
 
         void FilesToApi(SpaceshipDto dto, Spaceships domain);
-
+        Task<FileToApi> RemoveImageFromApi(FileToApiDto dto);
+        Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dto);
         // Minu versioon
         // Task<FileToApi> FilesToApi(SpaceshipDto dto, Spaceships domain);
     }
