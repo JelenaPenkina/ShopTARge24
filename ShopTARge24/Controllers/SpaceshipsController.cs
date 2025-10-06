@@ -260,7 +260,7 @@ namespace ShopTARge24.Controllers
             //kutsu välja vastav serviceclassi meetod
             var image = await _fileServices.RemoveImageFromApi(dto);
 
-            //kui on null, siis vii Index vaatesse
+            //kui on null, siis viia Index vaatesse
             if (image == null)
             {
                 return RedirectToAction(nameof(Index));

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ShopTARge24.Core.Domain;
 
 namespace ShopTARge24.Data
@@ -13,5 +12,6 @@ namespace ShopTARge24.Data
         public DbSet<FileToApi> FileToApis { get; set; }
 
         public DbSet<RealEstate> RealEstates { get; set; }
+        public DbSet<FileToDatabase> FileToDatabases { get; set; }
     }
 }

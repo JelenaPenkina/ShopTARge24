@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using ShopTARge24.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ShopTARge24.ApplicationServices.Services
 {
@@ -55,7 +56,7 @@ namespace ShopTARge24.ApplicationServices.Services
 
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
-            //kui soovin kustutada, siis pean l'bi Id pildi ülesse otsima
+            //kui soovin kustutada, siis pean läbi Id pildi ülesse otsima
             var imageId = await _context.FileToApis
                 .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
@@ -94,6 +95,41 @@ namespace ShopTARge24.ApplicationServices.Services
             }
 
             return null;
+        }
+
+        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
+        {
+
+            // pärast lugemiseks koju -> https://www.tutkit.com/et/tekstiopetused/8141-c-parimise-alused-loo-tohusad-klassid
+
+            // toimub kontroll, kas on vähemalt üks fail või mitu
+
+            if (dto.Files != null && dto.Files.Count > 0)
+             {
+                // tuleb kaustada foreach´i, et mitu faili ülesse laadida
+                foreach (var file in dto.Files)
+                {
+                    // foreach´i sees tuleb kasutada using´t 
+                    using (var target = new MemoryStream()) // MemoryStream -> salvestab byte´te jada ning saatma database file
+                    {
+                        // mappimine
+                        FileToDatabase files = new FileToDatabase()
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageTitle = file.FileName,
+                            RealEstateId = domain.Id
+                        };
+
+                        file.CopyTo(target);
+                        files.ImageData = target.ToArray();
+
+                        _context.FileToDatabases.Add(files);
+                    }
+                    // andmed salvestada andmebaasi  
+                   
+                }
+                
+            }
         }
     }
 }
