@@ -11,5 +11,8 @@ namespace ShopTARge24.Data
         public DbSet<Spaceships> Spaceships { get; set; }
         // public IEnumerable<object> Kindergarten { get; set; }
         public DbSet<Kindergarten> Kindergarten { get; set; }
+
+        public DbSet<FileToApi> FileToApis { get; set; }
+        public DbSet<FileToDatabase> FileToDatabases { get; set; }
     }
 }
