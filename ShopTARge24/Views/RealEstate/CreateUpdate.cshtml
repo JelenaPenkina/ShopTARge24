@@ -9,7 +9,6 @@ else
     <h1>Create</h1>
 }
 
-
 <div>
     <form method="post" enctype="multipart/form-data">
         <input asp-for="Id" type="hidden" />
@@ -58,6 +57,13 @@ else
 				<partial name="_Images" model="images" />
 			}
         </div>
+
+        <dl>
+            @foreach (var images in Model.Image)
+            {
+                <partial name="_Images" model="images" />
+            }
+        </dl>
 
         @if (Model.Id.HasValue)
         {

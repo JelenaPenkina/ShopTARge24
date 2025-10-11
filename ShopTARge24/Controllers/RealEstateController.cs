@@ -32,12 +32,9 @@ namespace ShopTARge24.Controllers
                 {
                     Id = x.Id,
                     Area = x.Area,
-                    Location = x.Location,
-                    RoomNumber = x.RoomNumber,
                     BuildingType = x.BuildingType,
-                    CreatedAt = x.CreatedAt,
-                    ModifiedAt = x.ModifiedAt
-                }).ToList(); 
+                    RoomNumber = x.RoomNumber,
+                });
 
             return View(result);
         }
