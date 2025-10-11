@@ -123,12 +123,10 @@ namespace ShopTARge24.ApplicationServices.Services
                         file.CopyTo(target);
                         files.ImageData = target.ToArray();
 
+                        // andmed salvestada andmebaasi  
                         _context.FileToDatabases.Add(files);
                     }
-                    // andmed salvestada andmebaasi  
-                   
-                }
-                
+                }  
             }
         }
     }

@@ -36,8 +36,8 @@ namespace ShopTARge24.ApplicationServices.Services
             spaceships.ModifiedAt = DateTime.Now;
             _fileServices.FilesToApi(dto, spaceships); // kutsun välja meetodi FilesToApi klassist
 
-           //  FileToApi.ReferenceEquals(dto, null); uurida, et mida see kood teeb 
-            
+            //  FileToApi.ReferenceEquals(dto, null); uurida, et mida see kood teeb -> teeb täpselt sama, mis object.ReferenceEquals
+            //  - kontrollib, kas dto ja null viitavad täpselt samale objektile mälus.
 
             await _context.Spaceships.AddAsync(spaceships);
             await _context.SaveChangesAsync();
@@ -59,7 +59,16 @@ namespace ShopTARge24.ApplicationServices.Services
             var result = await _context.Spaceships
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var images = await _context.FileToApis
+              .Where(x => x.SpaceshipId == id)
+              .Select(y => new FileToApiDto
+              {
+                  Id = y.Id,
+                  SpaceshipId = y.SpaceshipId,
+                  ExistingFilePath = y.ExistingFilePath,
+              }).ToArrayAsync();
 
+            await _fileServices.RemoveImagesFromApi(images);
             // kui rida on leitud, siis eemaldage andmebaasist
             _context.Spaceships.Remove(result);
             await _context.SaveChangesAsync();
