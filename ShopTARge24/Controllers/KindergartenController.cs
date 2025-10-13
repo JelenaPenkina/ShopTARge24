@@ -13,15 +13,18 @@ namespace ShopTARge24.Controllers
     {
         private readonly ShopTARge24Context _context;
         private readonly IKindergartenServices _kindergartenServices;
+        private readonly IFileServices fileServices;
 
         public KindergartenController
             (
                 ShopTARge24Context context,
                 IKindergartenServices kindergartenServices
+                IFileServices fileServices
             )
         {
             _context = context;
             _kindergartenServices = kindergartenServices;
+            _fileServices = fileServices;
         }
         public IActionResult Index()
         {
