@@ -1,4 +1,5 @@
-﻿using ShopTARge24.Core.Dto;
+﻿using System.Text.Json;
+using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 
 namespace ShopTARge24.ApplicationServices.Services
@@ -14,7 +15,8 @@ namespace ShopTARge24.ApplicationServices.Services
                 var httpResponse = await client.GetAsync(response);
                 string json = await httpResponse.Content.ReadAsStringAsync();
 
-
+                List<AccuLocationRootDto> weatherData =
+                    JsonSerializer.Deserialize<List<AccuLocationRootDto>>(json);
             }
 
             return dto;
