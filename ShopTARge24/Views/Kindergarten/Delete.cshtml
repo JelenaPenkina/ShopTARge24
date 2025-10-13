@@ -54,14 +54,20 @@
 		</div>
 	</dl>
 
-	<dl>
-		@foreach (var images in Model.Image)
+	<div class="row">
+		@foreach (var image in Model.Images)
 		{
-			<partial name="_Images" model="images" />
-		}
-	</dl>
+			<div class="col-md-3 text-center mb-3">
+				<div>@image.ImageTitle</div>
+				<img src="@image.Image" class="img-fluid card-img-top" alt="@image.ImageTitle" />
 
-	<hr />
+				<form asp-action="RemoveImage" asp-controller="Kindergarten" method="post">
+					<input type="hidden" name="id" value="@image.ImageId" />
+					<button type="submit" class="btn btn-danger btn-sm">Remove Image</button>
+				</form>
+			</div>
+		}
+	</div>
 	
 	<form asp-action="DeleteConfirmation">
 		<input type="hidden" asp-for="Id" />

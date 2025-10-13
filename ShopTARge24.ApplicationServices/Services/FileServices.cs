@@ -4,6 +4,7 @@ using ShopTARge24.Core.Domain;
 using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
+using System.Xml;
 
 
 namespace ShopTARge24.ApplicationServices.Services
@@ -27,103 +28,141 @@ namespace ShopTARge24.ApplicationServices.Services
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
-                if (!Directory.Exists(_webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"))
-                {
-                    Directory.CreateDirectory(_webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\");
-                }
+                string uploadFolder = Path.Combine(_webHost.ContentRootPath, "wwwroot", "multipleFileUpload");
+                if (!Directory.Exists(uploadFolder))
+                    Directory.CreateDirectory(uploadFolder);
 
                 foreach (var file in dto.Files)
                 {
-                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "wwwroot", "multipleFileUpload");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(fileStream);
-
-                        FileToApi path = new FileToApi
-                        {
-                            Id = Guid.NewGuid(),
-                            ExistingFilePath = uniqueFileName,
-                            KindergartenId = domain.Id
-                        };
-
-                        _context.FileToApis.AddAsync(path);
                     }
+
+                    var fileToApi = new FileToApi
+                    {
+                        Id = Guid.NewGuid(),
+                        ExistingFilePath = uniqueFileName,
+                        KindergartenId = domain.Id
+                    };
+
+                    _context.FileToApis.Add(fileToApi);
                 }
 
+                _context.SaveChanges();
             }
         }
 
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
-            //kui soovin kustutada, siis pean l'bi Id pildi ülesse otsima
-            var imageId = await _context.FileToApis
-                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+            ////kui soovin kustutada, siis pean läbi Id pildi ülesse otsima
+            //var imageId = await _context.FileToApis
+            //    .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-            //kus asuvad pildid, mida hakatakse kustutama
-            var filePath = _webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"
-                + imageId.ExistingFilePath;
+            ////kus asuvad pildid, mida hakatakse kustutama
+            //var filePath = _webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"
+            //    + imageId.ExistingFilePath;
 
-            if (File.Exists(filePath))
+            //if (File.Exists(filePath))
+            //{
+            //    File.Delete(filePath);
+            //}
+
+            //_context.FileToApis.Remove(imageId);
+            //await _context.SaveChangesAsync();
+
+            //return null;
+            var image = await _context.FileToApis.FirstOrDefaultAsync(x => x.Id == dto.Id);
+            if (image != null)
             {
-                File.Delete(filePath);
+                var filePath = Path.Combine(_webHost.ContentRootPath, "wwwroot", "multipleFileUpload", image.ExistingFilePath);
+                if (File.Exists(filePath)) File.Delete(filePath);
+
+                _context.FileToApis.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+            return null;
+        }
+
+        public async Task RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                var file = await _context.FileToDatabases.FirstOrDefaultAsync(x => x.Id == dto.Id);
+                if (file != null)
+                {
+                    _context.FileToDatabases.Remove(file);
+                }
             }
 
-            _context.FileToApis.Remove(imageId);
             await _context.SaveChangesAsync();
+        }
 
-            return null;
+
+        public void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain)
+        {
+            if (dto.Files == null || dto.Files.Count == 0) return;
+
+            foreach (var file in dto.Files)
+            {
+                using var ms = new MemoryStream();
+                file.CopyTo(ms);
+
+                var fileDb = new FileToDatabase
+                {
+                    Id = Guid.NewGuid(),
+                    ImageTitle = file.FileName,
+                    ImageData = ms.ToArray(),
+                    KindergartenId = domain.Id
+                };
+
+                _context.FileToDatabases.Add(fileDb);
+            }
+
+            _context.SaveChanges();
         }
 
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
+            var removedImages = new List<FileToApi>();
+
             foreach (var dto in dtos)
             {
-                var imageId = await _context.FileToApis
-                    .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
-
-                var filePath = _webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"
-                    + imageId.ExistingFilePath;
-
-                if (File.Exists(filePath))
+                var file = await _context.FileToApis.FirstOrDefaultAsync(x => x.Id == dto.Id);
+                if (file != null)
                 {
-                    File.Delete(filePath);
-                }
-
-                _context.FileToApis.Remove(imageId);
-                await _context.SaveChangesAsync();
-            }
-
-            return null;
-        }
-
-        public void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain)
-        {
-            //toimub kontroll, kas on v'hemalt [ks fail v]i mitu
-            if (dto.Files != null && dto.Files.Count > 0)
-            {
-                //tuleb kasutada foreachi et mitu faili [lesse laadida
-                foreach (var file in dto.Files)
-                {
-                    //foreachi sees tuleb kasutada using-t
-                    using (var target = new MemoryStream())
+                    // kustuta fail serverist
+                    var filePath = Path.Combine(_webHost.ContentRootPath, "wwwroot", "multipleFileUpload", file.ExistingFilePath);
+                    if (File.Exists(filePath))
                     {
-                        FileToDatabase files = new FileToDatabase()
-                        {
-                            Id = Guid.NewGuid(),
-                            ImageTitle = file.FileName,
-                            KindergartenId = domain.Id
-                        };
-
-                        file.CopyTo(target);
-                        files.ImageData = target.ToArray();
-
-                        _context.FileToDatabases.Add(files);
+                        File.Delete(filePath);
                     }
+
+                    _context.FileToApis.Remove(file);
+                    removedImages.Add(file);
                 }
             }
+
+            await _context.SaveChangesAsync();
+            return removedImages;
         }
     }
 }
+       
+    //    public async Task RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
+    //    {
+    //        foreach (var dto in dtos)
+    //        {
+    //            var file = await _context.FileToDatabases.FirstOrDefaultAsync(x => x.Id == dto.Id);
+    //            if (file != null)
+    //            {
+    //                _context.FileToDatabases.Remove(file);
+    //            }
+    //        }
+
+    //        await _context.SaveChangesAsync();
+    //    }
+ 

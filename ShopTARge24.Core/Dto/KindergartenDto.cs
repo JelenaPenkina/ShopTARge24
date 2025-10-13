@@ -17,9 +17,13 @@ namespace ShopTARge24.Core.Dto
 
         public List<IFormFile> Files { get; set; }
         public IEnumerable<FileToDatabaseDto> Image { get; set; }
-            = new List<FileToDatabaseDto>();
+           = new List<FileToDatabaseDto>();
+
+        public IEnumerable<FileToApiDto> FileToApiDtos { get; set; }
+            = new List<FileToApiDto>();
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public FileToDatabaseDto[] FileToDatabaseDtos { get; set; }
     }
 }

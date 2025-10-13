@@ -10,57 +10,71 @@ namespace ShopTARge24.ApplicationServices.Services
         public class KindergartenServices : IKindergartenServices
         {
             private readonly ShopTARge24Context _context;
+            private readonly IFileServices _fileServices;
 
             public KindergartenServices
                 (
-                    ShopTARge24Context context
+                    ShopTARge24Context context,
+                    IFileServices fileServices
                 )
             {
                 _context = context;
+                _fileServices = fileServices;
             }
 
             public async Task<Kindergarten> Create(KindergartenDto dto)
             {
-                var kindergarten = new Kindergarten
-                {
-                    Id = Guid.NewGuid(),
-                    GroupName = dto.GroupName,
-                    ChildrenCount = dto.ChildrenCount,
-                    KindergartenName = dto.KindergartenName,
-                    TeacherName = dto.TeacherName,
+                var domain = new Kindergarten();
+                
+                    domain.Id = Guid.NewGuid();
+                    domain.GroupName = dto.GroupName;
+                    domain.ChildrenCount = dto.ChildrenCount;
+                    domain.KindergartenName = dto.KindergartenName;
+                    domain.TeacherName = dto.TeacherName;
+                    domain.CreatedAt = dto.CreatedAt; // DateTime - kui kaustada sellist meetodit, siis kasutaja ei saa ise midagi sisestada, kui see on soovitatav
+                    domain.UpdatedAt = dto.UpdatedAt;
 
-                    CreatedAt = dto.CreatedAt,  // DateTime - kui kaustada sellist meetodit, siis kasutaja ei saa ise midagi sisestada, kui see on soovitatav
-                    UpdatedAt = dto.UpdatedAt
-                };
 
-                await _context.Kindergarten.AddAsync(kindergarten);
+                await _context.Kindergarten.AddAsync(domain);
                 await _context.SaveChangesAsync();
 
-                return kindergarten;
+                if (dto.Files != null && dto.Files.Count > 0)
+                {
+                    _fileServices.UploadFilesToDatabase(dto, domain);
+                }
+
+                return domain;
+
             }
 
             public async Task<Kindergarten> Update(KindergartenDto dto)
             {
-                var kindergarten = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == dto.Id);
+                var domain = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-                if (kindergarten == null)
+                if (domain == null)
                 {
                     return null; // või throw exception saab kasutada ka siin
                 }
 
-                kindergarten.KindergartenName = dto.KindergartenName;
-                kindergarten.GroupName = dto.GroupName;
-                kindergarten.TeacherName = dto.TeacherName;
-                kindergarten.ChildrenCount = dto.ChildrenCount;
+                domain.KindergartenName = dto.KindergartenName;
+                domain.GroupName = dto.GroupName;
+                domain.TeacherName = dto.TeacherName;
+                domain.ChildrenCount = dto.ChildrenCount;
 
-                kindergarten.CreatedAt = dto.CreatedAt;
-                kindergarten.UpdatedAt = dto.UpdatedAt;
+                domain.CreatedAt = dto.CreatedAt;
+                domain.UpdatedAt = dto.UpdatedAt;
 
             
-                _context.Kindergarten.Update(kindergarten);
+                _context.Kindergarten.Update(domain);
                 await _context.SaveChangesAsync();
 
-                return kindergarten;
+                if (dto.Files != null && dto.Files.Count > 0)
+                {
+                    _fileServices.UploadFilesToDatabase(dto, domain);
+                }
+
+                return domain;
+
             }
 
             public async Task<Kindergarten> DetailAsync(Guid id)
@@ -73,17 +87,36 @@ namespace ShopTARge24.ApplicationServices.Services
 
             public async Task<Kindergarten> Delete(Guid id)
             {
-                var kindergarten = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
+                var domain = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
+                if (domain == null) return null;
 
-                if (kindergarten == null)
+                var images = await _context.FileToDatabases.Where(x => x.KindergartenId == id).ToArrayAsync();
+                foreach (var img in images)
                 {
-                    return null;
+                    _context.FileToDatabases.Remove(img);
                 }
 
-                _context.Kindergarten.Remove(kindergarten);
+                _context.Kindergarten.Remove(domain);
                 await _context.SaveChangesAsync();
 
-                return kindergarten;
-            }
+                return domain;
+
+            //var result = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
+
+            //var images = await _context.FileToApis
+            //    .Where(x => x.KindergartenId == id)
+            //    .Select(y => new FileToApiDto
+            //    {
+            //        Id = y.Id,
+            //        KindergartenId = y.KindergartenId,
+            //        ExistingFilePath = y.ExistingFilePath,
+            //    }).ToArrayAsync();
+
+            //await _fileServices.RemoveImagesFromApi(images);
+            //_context.Kindergarten.Remove(result);
+            //await _context.SaveChangesAsync();
+
+            //return result;
         }
-    }
+        }
+}
