@@ -261,19 +261,18 @@ namespace ShopTARge24.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // turvalisus
-        public async Task<IActionResult> RemoveImage(Guid id)
+        [Route("Kindergarten/RemoveImage")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveImage(Guid imageId, Guid kindergartenId)
         {
-            var image = await _context.FileToDatabases.FirstOrDefaultAsync(x => x.Id == id);
-            if (image == null)
+            var success = await _kindergartenServices.RemoveImage(imageId);
+            if (!success)
+            {
                 return NotFound();
-
-            var kindergartenId = image.KindergartenId;
-
-            _context.FileToDatabases.Remove(image);
-            await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Details", new { id = kindergartenId });
         }
     }
 }
+ 

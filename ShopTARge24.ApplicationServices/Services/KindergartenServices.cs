@@ -85,38 +85,49 @@ namespace ShopTARge24.ApplicationServices.Services
                 return result;
             }
 
-            public async Task<Kindergarten> Delete(Guid id)
+        public async Task<Kindergarten> Delete(Guid id)
+        {
+            var domain = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
+            if (domain == null) return null;
+
+            var images = await _context.FileToDatabases.Where(x => x.KindergartenId == id).ToArrayAsync();
+            foreach (var img in images)
             {
-                var domain = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
-                if (domain == null) return null;
+                _context.FileToDatabases.Remove(img);
+            }
 
-                var images = await _context.FileToDatabases.Where(x => x.KindergartenId == id).ToArrayAsync();
-                foreach (var img in images)
-                {
-                    _context.FileToDatabases.Remove(img);
-                }
+            _context.Kindergarten.Remove(domain);
+            await _context.SaveChangesAsync();
 
-                _context.Kindergarten.Remove(domain);
-                await _context.SaveChangesAsync();
-
-                return domain;
-
-            //var result = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
-
-            //var images = await _context.FileToApis
-            //    .Where(x => x.KindergartenId == id)
-            //    .Select(y => new FileToApiDto
-            //    {
-            //        Id = y.Id,
-            //        KindergartenId = y.KindergartenId,
-            //        ExistingFilePath = y.ExistingFilePath,
-            //    }).ToArrayAsync();
-
-            //await _fileServices.RemoveImagesFromApi(images);
-            //_context.Kindergarten.Remove(result);
-            //await _context.SaveChangesAsync();
-
-            //return result;
+            return domain;
         }
+
+        public async Task<bool> RemoveImage(Guid imageId)
+        {
+            var image = await _context.FileToDatabases.FirstOrDefaultAsync(x => x.Id == imageId);
+            if (image == null) return false;
+
+            _context.FileToDatabases.Remove(image);
+            await _context.SaveChangesAsync();
+            return true;
         }
+
+        //var result = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == id);
+
+        //var images = await _context.FileToApis
+        //    .Where(x => x.KindergartenId == id)
+        //    .Select(y => new FileToApiDto
+        //    {
+        //        Id = y.Id,
+        //        KindergartenId = y.KindergartenId,
+        //        ExistingFilePath = y.ExistingFilePath,
+        //    }).ToArrayAsync();
+
+        //await _fileServices.RemoveImagesFromApi(images);
+        //_context.Kindergarten.Remove(result);
+        //await _context.SaveChangesAsync();
+
+        //return result;
+    }
 }
+
