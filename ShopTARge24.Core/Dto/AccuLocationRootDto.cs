@@ -15,14 +15,11 @@
         public string? MobileLink { get; set; }
         public string? Link { get; set; }
 
-
         public class AccuTemperatureDto
         {
             public AccuWeatherUnitDto? Metric { get; set; }
             public AccuWeatherUnitDto? Imperail { get; set; }
         }
-
-
 
         public class AccuWeatherUnitDto 
         {
@@ -31,6 +28,9 @@
             public int UnitType { get; set; }
         }
 
+
+
+
         //public class AccuMericDto -> minu versioon 
         //{
         //    public double Value { get; set; }
@@ -38,7 +38,6 @@
         //    public int UnitType { get; set; }
 
         //}
-
 
         //public class AccuImperailDto
         //{
