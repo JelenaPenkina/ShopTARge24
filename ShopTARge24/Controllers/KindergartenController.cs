@@ -271,7 +271,7 @@ namespace ShopTARge24.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Details", new { id = kindergartenId });
+            return RedirectToAction("Index");
         }
 
     }
