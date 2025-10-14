@@ -68,6 +68,7 @@
 
 				<form asp-action="RemoveImage" asp-controller="Kindergarten" method="post">
 					@Html.AntiForgeryToken()
+					<a asp-action="RemoveImage" asp-route-imageId="@image.ImageId" asp-route-kindergartenId="@Model.Id">Remove Images</a>
 					<input type="hidden" name="imageId" value="@image.ImageId" />
 					<input type="hidden" name="kindergartenId" value="@Model.Id" />
 					<button type="submit" class="btn btn-danger btn-sm">Remove Image</button>

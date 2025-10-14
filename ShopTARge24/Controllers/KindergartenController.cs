@@ -7,7 +7,6 @@ using ShopTARge24.Data;
 using ShopTARge24.Models.Kindergarten;
 using System.IO;
 
-
 namespace ShopTARge24.Controllers
 {
     public class KindergartenController : Controller
@@ -21,6 +20,7 @@ namespace ShopTARge24.Controllers
                 ShopTARge24Context context,
                 IKindergartenServices kindergartenServices,
                 IFileServices fileServices
+
             )
         {
             _context = context;
@@ -261,7 +261,7 @@ namespace ShopTARge24.Controllers
         }
 
         [HttpPost]
-        [Route("Kindergarten/RemoveImage")]
+        //[Route("Kindergarten/RemoveImage")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveImage(Guid imageId, Guid kindergartenId)
         {
@@ -273,6 +273,6 @@ namespace ShopTARge24.Controllers
 
             return RedirectToAction("Details", new { id = kindergartenId });
         }
+
     }
 }
- 
