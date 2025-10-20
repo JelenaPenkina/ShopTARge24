@@ -33,7 +33,9 @@ namespace ShopTARge24.ApplicationServices.Services
                 string jsonWeather = await httpResponseWeather.Content.ReadAsStringAsync();
 
                 List<AccuLocationRootDto> weatherDataResult =
-                    JsonSerializer.Deserialize<List<AccuLocationRootDto>>(jsonWeather)
+                    JsonSerializer.Deserialize<List<AccuLocationRootDto>>(jsonWeather);
+
+                dto.TempMinCelsius = weatherDataResult[0].Temperature.Metric.Value;
             }
             return dto;
         } 
