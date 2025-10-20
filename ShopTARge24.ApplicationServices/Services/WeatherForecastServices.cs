@@ -8,17 +8,33 @@ namespace ShopTARge24.ApplicationServices.Services
     {
         public async Task<AccuLocationWeatherResultDto> AccuWeatherResult(AccuLocationWeatherResultDto dto)
         {
-            var response = $"https://api.weatherapi.com/v1/current.json"; // Tallinna locationKey 127964
+            // var response = $"https://api.weatherapi.com/v1/current.json"; // Tallinna locationKey 127964
+
+            string apiKey = "";
+            var response = $"http://dataservice.accuweather.com/locations/v1/cities/search?apikey={apiKey}&q={dto.CityName}";
 
             using (var client = new HttpClient())
             {
                 var httpResponse = await client.GetAsync(response);
                 string json = await httpResponse.Content.ReadAsStringAsync();
 
-                List<AccuLocationRootDto> weatherData =
-                    JsonSerializer.Deserialize<List<AccuLocationRootDto>>(json);
+                List<AccuCityCodeRootDto> weatherData =
+                    JsonSerializer.Deserialize<List<AccuCityCodeRootDto>>(json);
+
+                dto.CityName = weatherData[0].LocalizedName;
+                dto.CityCode = weatherData[0].Key;
             }
 
+            string weatherResponse = $"http://dataservice.accuweather.com/currentconditions/v1{dto.CityCode}?apiKey={apiKey}&metric=true";
+
+            using (var clientWeather = new HttpClient())
+            {
+                var httpResponseWeather = await clientWeather.GetAsync(weatherResponse);
+                string jsonWeather = await httpResponseWeather.Content.ReadAsStringAsync();
+
+                List<AccuLocationRootDto> weatherDataResult =
+                    JsonSerializer.Deserialize<List<AccuLocationRootDto>>(jsonWeather)
+            }
             return dto;
         } 
     }

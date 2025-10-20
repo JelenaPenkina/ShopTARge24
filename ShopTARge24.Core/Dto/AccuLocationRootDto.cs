@@ -14,7 +14,6 @@
 
         public string? MobileLink { get; set; }
         public string? Link { get; set; }
-
         public class AccuTemperatureDto
         {
             public AccuWeatherUnitDto? Metric { get; set; }
