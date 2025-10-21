@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Models\Kindergarten\" />
     <Folder Include="Views\Kindergarten\" />
+    <Folder Include="Views\ChuckNorris\" />
   </ItemGroup>
 
 </Project>
