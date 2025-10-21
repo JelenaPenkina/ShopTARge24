@@ -32,6 +32,7 @@ namespace ShopTARge24.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("KindergartenId")
+                    b.Property<Guid?>("SpaceshipId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -52,6 +53,7 @@ namespace ShopTARge24.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("KindergartenId")
+                    b.Property<Guid?>("RealEstateId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -60,6 +62,7 @@ namespace ShopTARge24.Data.Migrations
                 });
 
             modelBuilder.Entity("ShopTARge24.Core.Domain.Kindergarten", b =>
+            modelBuilder.Entity("ShopTARge24.Core.Domain.RealEstate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,6 +92,27 @@ namespace ShopTARge24.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kindergarten");
+                    b.Property<double?>("Area")
+                        .HasColumnType("float");
+
+                    b.Property<string>("BuildingType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RealEstates");
                 });
 
             modelBuilder.Entity("ShopTARge24.Core.Domain.Spaceships", b =>

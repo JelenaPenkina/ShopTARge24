@@ -9,13 +9,17 @@ namespace ShopTARge24.ApplicationServices.Services
     public class SpaceshipServices : ISpaceshipServices
     {
         private readonly ShopTARge24Context _context;
+        private readonly IFileServices _fileServices;
 
         public SpaceshipServices
             (
-                ShopTARge24Context context
+                ShopTARge24Context context,
+                IFileServices fileServices
+
             )
         {
             _context = context;
+            _fileServices = fileServices; 
         }
 
         public async Task<Spaceships> Create(SpaceshipDto dto)
@@ -30,6 +34,10 @@ namespace ShopTARge24.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = DateTime.Now;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships); // kutsun välja meetodi FilesToApi klassist
+
+            //  FileToApi.ReferenceEquals(dto, null); uurida, et mida see kood teeb -> teeb täpselt sama, mis object.ReferenceEquals
+            //  - kontrollib, kas dto ja null viitavad täpselt samale objektile mälus.
 
             await _context.Spaceships.AddAsync(spaceships);
             await _context.SaveChangesAsync();
@@ -72,12 +80,43 @@ namespace ShopTARge24.ApplicationServices.Services
             var result = await _context.Spaceships
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var images = await _context.FileToApis
+              .Where(x => x.SpaceshipId == id)
+              .Select(y => new FileToApiDto
+              {
+                  Id = y.Id,
+                  SpaceshipId = y.SpaceshipId,
+                  ExistingFilePath = y.ExistingFilePath,
+              }).ToArrayAsync();
 
-            //kui rida on leitud, siis eemaldage andmebaasist
+            await _fileServices.RemoveImagesFromApi(images);
+            // kui rida on leitud, siis eemaldage andmebaasist
             _context.Spaceships.Remove(result);
             await _context.SaveChangesAsync();
 
             return result;
+        }
+
+        public async Task<Spaceships> Update(SpaceshipDto dto)
+        {
+            //vaja leida doamini objekt, mida saaks mappida dto-ga
+            Spaceships spaceships = new Spaceships();
+
+            spaceships.Id = dto.Id;
+            spaceships.Name = dto.Name;
+            spaceships.Classification = dto.Classification;
+            spaceships.BuiltDate = dto.BuiltDate;
+            spaceships.Crew = dto.Crew;
+            spaceships.EnginePower = dto.EnginePower;
+            spaceships.CreatedAt = dto.CreatedAt;
+            spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships);
+
+            //tuleb db-s teha andmete uuendamine jauue oleku salvestamine
+            _context.Spaceships.Update(spaceships);
+            await _context.SaveChangesAsync();
+
+            return spaceships;
         }
     }
 }
