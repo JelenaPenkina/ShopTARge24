@@ -32,6 +32,8 @@ namespace ShopTARge24.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("KindergartenId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SpaceshipId")
                         .HasColumnType("uniqueidentifier");
 
@@ -53,6 +55,8 @@ namespace ShopTARge24.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("KindergartenId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("RealEstateId")
                         .HasColumnType("uniqueidentifier");
 
@@ -62,7 +66,6 @@ namespace ShopTARge24.Data.Migrations
                 });
 
             modelBuilder.Entity("ShopTARge24.Core.Domain.Kindergarten", b =>
-            modelBuilder.Entity("ShopTARge24.Core.Domain.RealEstate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,6 +95,14 @@ namespace ShopTARge24.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kindergarten");
+                });
+
+            modelBuilder.Entity("ShopTARge24.Core.Domain.RealEstate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double?>("Area")
                         .HasColumnType("float");
 
