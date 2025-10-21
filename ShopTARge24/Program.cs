@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
+builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
 builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
 builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
@@ -28,6 +29,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();

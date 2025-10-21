@@ -45,6 +45,27 @@ namespace ShopTARge24.ApplicationServices.Services
             return spaceships;
         }
 
+        public async Task<Spaceships> Update(SpaceshipDto dto)
+        {
+            //vaja leida doamini objekt, mida saaks mappida dto-ga
+            Spaceships spaceships = new Spaceships();
+
+            spaceships.Id = dto.Id;
+            spaceships.Name = dto.Name;
+            spaceships.Classification = dto.Classification;
+            spaceships.BuiltDate = dto.BuiltDate;
+            spaceships.Crew = dto.Crew;
+            spaceships.EnginePower = dto.EnginePower;
+            spaceships.CreatedAt = dto.CreatedAt;
+            spaceships.ModifiedAt = DateTime.Now;
+
+            //tuleb db-s teha andmete uuendamine jauue oleku salvestamine
+            _context.Spaceships.Update(spaceships);
+            await _context.SaveChangesAsync();
+
+            return spaceships;
+        }
+
         public async Task<Spaceships> DetailAsync(Guid id)
         {
             var result = await _context.Spaceships
@@ -55,7 +76,7 @@ namespace ShopTARge24.ApplicationServices.Services
 
         public async Task<Spaceships> Delete(Guid id)
         {
-            // leida ülesse konkreetne soovitud rida, mida soovite kustutada
+            //leida ülesse konkreetne soovitud rida, mida soovite kustutada
             var result = await _context.Spaceships
                 .FirstOrDefaultAsync(x => x.Id == id);
 
