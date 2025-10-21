@@ -1,6 +1,4 @@
-﻿using
-
-using ShopTARge24.Core.Dto;
+﻿using ShopTARge24.Core.Dto;
 
 namespace ShopTARge24.Models.ChuckNorris
 {
