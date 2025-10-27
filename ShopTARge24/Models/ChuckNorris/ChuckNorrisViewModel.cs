@@ -4,7 +4,7 @@ namespace ShopTARge24.Models.ChuckNorris
 {
     public class ChuckNorrisViewModel
     {
-        public List<Categories> Categories;
+        public string[] Categories { get; set; }
         public string? id { get; set; }
         public string? iconUrl { get; set; }
         public string? url { get; set; }

@@ -2,6 +2,6 @@
 {
     public class ChuckNorrisSearchViewModel
     {
-        public string Category { get; set; } = string.Empty;
+        public string[]? Categories { get; set; }
     }
 }
