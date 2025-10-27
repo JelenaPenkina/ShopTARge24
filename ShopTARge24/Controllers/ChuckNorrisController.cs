@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.Dto.ChuckNorris;
 using ShopTARge24.Core.ServiceInterface;
-using ShopTARge24.Models.AccuWeathers;
 using ShopTARge24.Models.ChuckNorris;
 
 namespace ShopTARge24.Controllers
@@ -32,7 +30,8 @@ namespace ShopTARge24.Controllers
 
             vm.id = dto.id;
             vm.value = dto.value;
-            vm.iconUrl = dto.iconUrl;
+            vm.url = dto.url;
+            vm.iconUrl = dto.ToString.iconUrl;
             vm.createdAt = dto.DateTime.Now();
             vm.updatedAt = dto.DateTime.Now();
 

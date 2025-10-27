@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using ShopTARge24.Core.ServiceInterface;
-using ShopTARge24.Core.Dto;
 using System.Text.Json;
 
 namespace ShopTARge24.ApplicationServices.Services
