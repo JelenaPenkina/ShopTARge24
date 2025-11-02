@@ -4,6 +4,6 @@ namespace ShopTARge24.Core.ServiceInterface
 {
     public interface IChuckNorrisServices
     {
-        Task<ChuckNorrisJokesDto> ChuckNorrisJokesResult(ChuckNorrisJokesDto dto);
+        //Task<ChuckNorrisJokesDto> ChuckNorrisJokesResult(ChuckNorrisJokesDto dto);
     }
 }

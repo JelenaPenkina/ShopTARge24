@@ -7,35 +7,35 @@ namespace ShopTARge24.Controllers
 {
     public class ChuckNorrisController : Controller
     {
-        private readonly IChuckNorrisServices _chuckNorrisServices;
+        //private readonly IChuckNorrisServices _chuckNorrisServices;
 
-        public ChuckNorrisController(IChuckNorrisServices chuckNorrisServic)
-        {
-            _chuckNorrisServices = chuckNorrisServic;
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public ChuckNorrisController(IChuckNorrisServices chuckNorrisServic)
+        //{
+        //    _chuckNorrisServices = chuckNorrisServic;
+        //}
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet]
-        public IActionResult Categories(string category)
-        {
-            ChuckNorrisJokesDto dto = new();
+        //[HttpGet]
+        //public IActionResult Categories(string category)
+        //{
+        //    ChuckNorrisJokesDto dto = new();
 
-            dto.Categories = category;
+        //    dto.Categories = category;
 
-            _chuckNorrisServices.ChuckNorrisJokesResult(dto);
-            ChuckNorrisViewModel vm = new();
+        //    _chuckNorrisServices.ChuckNorrisJokesResult(dto);
+        //    ChuckNorrisViewModel vm = new();
 
-            vm.id = dto.id;
-            vm.value = dto.value;
-            vm.url = dto.url;
-            vm.iconUrl = dto.ToString.iconUrl;
-            vm.createdAt = dto.DateTime.Now();
-            vm.updatedAt = dto.DateTime.Now();
+        //    vm.id = dto.id;
+        //    vm.value = dto.value;
+        //    vm.url = dto.url;
+        //    vm.iconUrl = dto.ToString.iconUrl;
+        //    vm.createdAt = dto.DateTime.Now();
+        //    vm.updatedAt = dto.DateTime.Now();
 
-            return View(vm);
-        }
+        //    return View(vm);
+        //}
     }
 }
