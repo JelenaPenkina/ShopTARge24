@@ -1,40 +1,60 @@
 ﻿using System.Text;
 using ShopTARge24.Core.ServiceInterface;
 using System.Text.Json;
+using Nancy.Json;
+using System.Net;
+using ShopTARge24.Core.Dto.ChuckNorris;
 
 namespace ShopTARge24.ApplicationServices.Services
 {
     public class ChuckNorrisServices : IChuckNorrisServices
     {
-        //public async Task<ChuckNorrisJokesDto> ChuckNorrisJokesResult(ChuckNorrisJokesDto dto)
-        //{
-        //    var baseUrl = "https://api.chucknorris.io/jokes/random";
+        private readonly HttpClient _httpClient;
 
-        //    using (var httpClient = new HttpClient())
-        //    {
-        //        // Teeme päringu Chuck Norris API-le
-        //        var response = await httpClient.GetAsync(baseUrl);
+        public ChuckNorrisServices(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
-        //        response.EnsureSuccessStatusCode(); // viskab exceptioni, kui midagi on valesti
 
-        //        var json = await response.Content.ReadAsStringAsync();
+        public async Task<ChuckNorrisRootDto> ChuckNorrisResultHttpClient()
+        {
+            var response = await _httpClient.GetAsync("https://api.chucknorris.io/jokes/random");
+            //annab veateate, kui response ei ole edukas
+            response.EnsureSuccessStatusCode();
 
-        //        // Chuck Norris API tagastab sellise JSON struktuuri:
-        //        // {
-        //        //   "categories": [],
-        //        //   "created_at": "...",
-        //        //   "icon_url": "...",
-        //        //   "id": "...",
-        //        //   "updated_at": "...",
-        //        //   "url": "...",
-        //        //   "value": "Chuck Norris joke text"
-        //        // }
+            var json = await response.Content.ReadAsStringAsync();
 
-        //        var joke = JsonSerializer.Deserialize<ChuckNorrisJokesDto>(json,
-        //            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var options = new JsonSerializerOptions
+            {
+                //PropertyNameCaseInsensitive = true lets you ignore exact casing of JSON property names.
+                PropertyNameCaseInsensitive = true
+            };
 
-        //        return joke;
-        //    }
-        //}
+            var joke = JsonSerializer.Deserialize<ChuckNorrisRootDto>(json, options);
+            //The null-forgiving operator (!) is safe here since API always returns JSON.
+            return joke!;
+        }
+
+        public async Task<ChuckNorrisResultDto> ChuckNorrisResult(ChuckNorrisResultDto dto)
+        {
+            var url = "https://api.chucknorris.io/jokes/random";
+
+            using (WebClient client = new WebClient())
+            {
+                string json = client.DownloadString(url);
+                ChuckNorrisRootDto chuckNorrisResult = new JavaScriptSerializer().Deserialize<ChuckNorrisRootDto>(json);
+
+                //dto.Categories = chuckNorrisResult.Categories[0];
+                dto.CreatedAt = chuckNorrisResult.CreatedAt;
+                dto.IconUrl = chuckNorrisResult.IconUrl;
+                dto.Id = chuckNorrisResult.Id;
+                dto.UpdatedAt = chuckNorrisResult.UpdatedAt;
+                dto.Url = chuckNorrisResult.Url;
+                dto.Value = chuckNorrisResult.Value;
+            }
+
+            return dto;
+        }
     }
 }

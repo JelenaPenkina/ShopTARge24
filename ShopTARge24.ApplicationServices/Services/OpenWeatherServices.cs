@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using ShopTARge24.Models.OpenWeather;
+using ShopTARge24.Core.Dto;
 
 
 namespace ShopTARge24.ApplicationServices.Services
@@ -13,10 +13,11 @@ namespace ShopTARge24.ApplicationServices.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<OpenWeatherViewModel> GetCityWeather(string cityName)
+        // läbi interface ja OpenWeatherRootDto - uus model
+        public async Task<OpenWeatherRootDto> GetCityWeather(string cityName)
         {
-            const string ApiKey = "";
-            const string Url = "https://api.openweathermap.org/data/2.5/weather";
+            const string ApiKey = "707f2b54aafd3db7e43408772976a616";
+            const string Url = "https://api.openweathermap.org/data/2.5/weather?q={CityName}&appid={API key}";
 
             if (string.IsNullOrEmpty(cityName))
                 return null;
@@ -31,7 +32,7 @@ namespace ShopTARge24.ApplicationServices.Services
             using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
 
-            return new OpenWeatherViewModel
+            return new OpenWeatherRootDto
             {
                 CityName = root.GetProperty("name").GetString() ?? "",
                 TempValue = root.GetProperty("main").GetProperty("temp").GetDouble(),

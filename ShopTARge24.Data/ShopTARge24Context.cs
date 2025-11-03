@@ -7,7 +7,9 @@ namespace ShopTARge24.Data
     {
 
         public ShopTARge24Context(DbContextOptions<ShopTARge24Context> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
         public DbSet<Spaceships> Spaceships { get; set; }
         // public IEnumerable<object> Kindergarten { get; set; }
         public DbSet<Kindergarten> Kindergarten { get; set; }
@@ -16,5 +18,6 @@ namespace ShopTARge24.Data
   
         public DbSet<RealEstate> RealEstates { get; set; }
         public DbSet<FileToDatabase> FileToDatabases { get; set; }
+
     }
 }

@@ -17,6 +17,9 @@ builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 builder.Services.AddScoped<OpenWeatherServices>();
 builder.Services.AddHttpClient();
 
+builder.Services.AddHttpClient<IChuckNorrisServices, ChuckNorrisServices>();
+builder.Services.AddHttpClient<ICocktailServices, CocktailServices>();
+
 builder.Services.AddDbContext<ShopTARge24Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

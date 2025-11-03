@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopTARge24.Core.Dto.ChuckNorris
 {
-    public class ChuckNorrisWebClientDto
+    public class ChuckNorrisRootDto
     {
         [JsonPropertyName("Id")]
         public int Id { get; set; }
@@ -16,7 +16,7 @@ namespace ShopTARge24.Core.Dto.ChuckNorris
         public string[] Categories { get; set; }
 
         [JsonPropertyName("iconUrl")]
-        public string iconUrl { get; set; }
+        public string IconUrl { get; set; }
 
         [JsonPropertyName("Url")]
         public string Url { get; set; }
@@ -25,9 +25,9 @@ namespace ShopTARge24.Core.Dto.ChuckNorris
         public string Value { get; set; }
 
         [JsonPropertyName("createdAt")]
-        public string createdAt { get; set; }
+        public string CreatedAt { get; set; }
 
         [JsonPropertyName("updatedAt")]
-        public string updatedAt { get; set; }
+        public string UpdatedAt { get; set; }
     }
 }

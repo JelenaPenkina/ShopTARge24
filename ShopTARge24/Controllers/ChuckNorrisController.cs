@@ -7,35 +7,42 @@ namespace ShopTARge24.Controllers
 {
     public class ChuckNorrisController : Controller
     {
-        //private readonly IChuckNorrisServices _chuckNorrisServices;
+        private readonly IChuckNorrisServices _chuckNorrisServices;
 
-        //public ChuckNorrisController(IChuckNorrisServices chuckNorrisServic)
-        //{
-        //    _chuckNorrisServices = chuckNorrisServic;
-        //}
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        public ChuckNorrisController
+            (
+                IChuckNorrisServices chuckNorrisServices
+            )
+        {
+            _chuckNorrisServices = chuckNorrisServices;
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-        //[HttpGet]
-        //public IActionResult Categories(string category)
-        //{
-        //    ChuckNorrisJokesDto dto = new();
+        [HttpPost]
+        public IActionResult SearchChuckNorrisJokes()
+        {
+            return RedirectToAction(nameof(Joke));
+        }
 
-        //    dto.Categories = category;
+        [HttpGet]
+        public async Task<IActionResult> Joke()
+        {
+            var joke = await _chuckNorrisServices.ChuckNorrisResultHttpClient();
 
-        //    _chuckNorrisServices.ChuckNorrisJokesResult(dto);
-        //    ChuckNorrisViewModel vm = new();
+            ChuckNorrisViewModel vm = new();
 
-        //    vm.id = dto.id;
-        //    vm.value = dto.value;
-        //    vm.url = dto.url;
-        //    vm.iconUrl = dto.ToString.iconUrl;
-        //    vm.createdAt = dto.DateTime.Now();
-        //    vm.updatedAt = dto.DateTime.Now();
+            //vm.Categories = joke.Categories;
+            vm.CreatedAt = joke.CreatedAt;
+            vm.IconUrl = joke.IconUrl;
+            vm.Id = joke.Id;
+            vm.UpdatedAt = joke.UpdatedAt;
+            vm.Url = joke.Url;
+            vm.Value = joke.Value;
 
-        //    return View(vm);
-        //}
+            return View(vm);
+        }
     }
 }

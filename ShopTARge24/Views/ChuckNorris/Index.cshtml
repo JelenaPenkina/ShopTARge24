@@ -2,14 +2,17 @@
 
 <h1>Search ChuckNorris Jokes</h1>
 
-<div class="container">
-	<form method="post">
-		<div class="container">
-			<div class="form-group col-md-offset-3 col-md-5">
-				<label asp-for="id" style="font: Arial"></label>
-				<input asp-for="id" class="form-control" />
-				<span asp-validation-for="id" class="text-danger"></span>
-			</div>
-		</div>
-	</form>
+﻿<div class="container">
+    <form method="post">
+        <div class="container">
+            <div class="form-group col-md-offset-3 col-md-5">
+                <h2>Welcome to Chuck Norris joke site</h2>
+            </div>
+        </div>
+        <div class="container">
+            <div class="form-group col-md-offset-3 col-md-5">
+                <button asp-controller="chuckNorris" asp-action="searchChuckNorrisJokes" class="btn btn-primary">Chuck Norris joke</button>
+            </div>
+        </div>
+    </form>
 </div>
