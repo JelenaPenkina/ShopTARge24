@@ -164,4 +164,3 @@ namespace ShopTARge24.Core.Dto.Cocktail
         public string DateModified { get; set; }
     }
 }
-}

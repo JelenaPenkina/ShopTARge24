@@ -1,8 +1,8 @@
 ﻿namespace ShopTARge24.Core.Dto.ChuckNorris
 {
-    class ChuckNorrisResultDto
+    public class ChuckNorrisResultDto
     {
-        public List<string> Categories { get; set; } = new List<string>();
+        //public List<string> Categories { get; set; } = new List<string>();
         public string CreatedAt { get; set; } = string.Empty;
         public string IconUrl { get; set; } = string.Empty;
         public string Id { get; set; } = string.Empty;

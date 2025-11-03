@@ -7,3 +7,4 @@ namespace ShopTARge24.Core.ServiceInterface
         Task<ChuckNorrisRootDto> ChuckNorrisResultHttpClient();
         Task<ChuckNorrisResultDto> ChuckNorrisResult(ChuckNorrisResultDto dto);
     }
+}

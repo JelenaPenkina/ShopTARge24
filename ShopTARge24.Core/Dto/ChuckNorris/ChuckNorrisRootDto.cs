@@ -10,7 +10,7 @@ namespace ShopTARge24.Core.Dto.ChuckNorris
     public class ChuckNorrisRootDto
     {
         [JsonPropertyName("Id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [JsonPropertyName("Categories")]
         public string[] Categories { get; set; }

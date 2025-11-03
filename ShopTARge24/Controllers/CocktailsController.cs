@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShopTARge24.Core.Dto.Cocktail;
+using ShopTARge24.Core.ServiceInterface;
+using ShopTARge24.Models.Cocktail;
 
 namespace ShopTARge24.Controllers
 {
-    public class CoctailsController : Controller
+    public class CocktailsController : Controller
     {
         private readonly ICocktailServices _cocktailServices;
 
