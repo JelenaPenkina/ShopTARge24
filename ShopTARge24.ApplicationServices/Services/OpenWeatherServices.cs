@@ -17,7 +17,7 @@ namespace ShopTARge24.ApplicationServices.Services
         public async Task<OpenWeatherRootDto> GetCityWeather(string cityName)
         {
             const string ApiKey = "707f2b54aafd3db7e43408772976a616";
-            const string Url = "https://api.openweathermap.org/data/2.5/weather?q={CityName}&appid={API key}";
+            const string Url = $"https://api.openweathermap.org/data/2.5/weather";
 
             if (string.IsNullOrEmpty(cityName))
                 return null;

@@ -34,7 +34,7 @@ namespace ShopTARge24.Controllers
                 return View("Index", model);
             }
 
-            return View("ShowWeather", weatherData);
+            return View("City", weatherData);
         }
     }
 }
