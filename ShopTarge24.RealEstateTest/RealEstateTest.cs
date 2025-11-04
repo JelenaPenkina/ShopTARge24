@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using ShopTARge24.Core.Dto;
+﻿using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
+using System.Threading.Tasks;
 
 namespace ShopTarge24.RealEstateTest
 {
-    public class RealEstateTest
+    public class RealEstateTest : TestBase
     {
         [Fact]
         public async Task Test1()

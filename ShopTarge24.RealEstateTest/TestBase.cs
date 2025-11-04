@@ -23,6 +23,7 @@ namespace ShopTarge24.RealEstateTest
         public virtual void SetupServices(IServiceCollection services)
         {
             services.AddScoped<IRealEstateServices, RealEstateServices>();
+            services.AddScoped<IFileServices, FileServices>();
 
             services.AddDbContext<ShopTARge24Context>(x =>
             {
