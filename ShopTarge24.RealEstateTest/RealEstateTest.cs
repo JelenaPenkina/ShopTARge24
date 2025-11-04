@@ -7,7 +7,7 @@ namespace ShopTarge24.RealEstateTest
     public class RealEstateTest : TestBase
     {
         [Fact]
-        public async Task Test1()
+        public async Task ShouldNot_AddEmptyRealEstate_WhenReturnResult()
         {
             // Arrange nii öelda ette valmistus
             RealEstateDto dto = new()
@@ -23,7 +23,7 @@ namespace ShopTarge24.RealEstateTest
             // Act
             var result = await Svc<IRealEstateServices>().Create(dto);
 
-            // Assert
+            // Assert - kontrollib, et poleks kindlasti test null
             Assert.NotNull(result);
         }
     }

@@ -7,6 +7,8 @@ using ShopTARge24.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using Microsoft.Extensions.Hosting;
+using ShopTarge24.RealEstateTest.Mock;
 
 namespace ShopTarge24.RealEstateTest
 {
@@ -24,6 +26,7 @@ namespace ShopTarge24.RealEstateTest
         {
             services.AddScoped<IRealEstateServices, RealEstateServices>();
             services.AddScoped<IFileServices, FileServices>();
+            services.AddScoped<IHostEnvironment, MockIHostEnviroment>();
 
             services.AddDbContext<ShopTARge24Context>(x =>
             {
@@ -42,6 +45,7 @@ namespace ShopTarge24.RealEstateTest
         protected T Svc<T>()
         {
             // Resolve service from the service provider
+            // https://rubenmamo.com/articles/solved-azure-functions-in-azure-container-apps-unable-to-resolve-service-for-type-microsoft-aspnetcore-hosting-ihostingenvironment-while-attempting-to-activate-microsoft-aspnetcore-hosting-de
             return serviceProvider.GetService<T>();
         }
 
