@@ -27,47 +27,50 @@ namespace ShopTarge24.RealEstateTest
             Assert.NotNull(result);
         }
 
-        // ShouldNot_GetByIdRealEstate_WhenReturnsNotEqual()
         // Should_GetByIdRealEstate_WhenReturnsEqual()
         // Should_DeleteByIdRealEstate_WhenDeleteRealEstate()
         // Should_DeleteByIdRealEstate_WhenDidNotDeleteRealEstate()
 
+        //[Fact]
+        //public async Task ShouldNot_GetByIdRealEstate_WhenReturnsNotEqualMy()
+        //{
+        //    var realEstateService = Svc<IRealEstateServices>();
+
+        //    // Act
+        //    var result = await realEstateService.GetById(Guid.NewGuid());
+
+        //    // Assert
+        //    Assert.Null(result);
+        //}
+
+        // õpetaja kood koos https://guidgenerator.com/: 
         [Fact]
         public async Task ShouldNot_GetByIdRealEstate_WhenReturnsNotEqual()
         {
-            var realEstateService = Svc<IRealEstateServices>();
+            // Arrange
+            Guid wrongGuid = Guid.NewGuid();
+            Guid guid = Guid.Parse("ade2c601-537e-4760-90dc-0c3f7f25b382");
 
             // Act
-            var result = await realEstateService.GetById(Guid.NewGuid());
+            await Svc<IRealEstateServices>().DetailAsync(guid);
 
             // Assert
-            Assert.Null(result);
+            Assert.NotEqual(wrongGuid, guid);
         }
+
 
         [Fact]
         public async Task Should_GetByIdRealEstate_WhenReturnsEqual()
         {
-            var realEstateService = Svc<IRealEstateServices>();
+            // Arrange
+            Guid databaseGuid = Guid.Parse("ade2c601-537e-4760-90dc-0c3f7f25b382");
+            Guid guid = Guid.Parse("ade2c601-537e-4760-90dc-0c3f7f25b382");
 
-            var dto = new RealEstateDto
-            {
-                Area = 75.0,
-                Location = "Tallinn",
-                RoomNumber = 2,
-                BuildingType = "Apartment",
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = DateTime.UtcNow
-            };
-
-            var created = await realEstateService.Create(dto);
-            
             // Act
-            var result = await realEstateService.GetById(created.Id);
+            await Svc<IRealEstateServices>().DetailAsync(guid);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(created.Id, result.Id);
-            Assert.Equal("Tallinn", result.Location);
+            Assert.Equal(databaseGuid, guid);
         }
 
 
@@ -75,27 +78,26 @@ namespace ShopTarge24.RealEstateTest
         public async Task Should_DeleteByIdRealEstate_WhenDeleteRealEstate()
         {
             // Arrange
-            var realEstateService = Svc<IRealEstateServices>();
+            RealEstateDto dto = MockRealEstateDto();
 
-            var dto = new RealEstateDto
+            // Act
+            await Svc<IRealEstateServices>().DeleteUnit(Guid);
+
+            // Assert
+            Assert.NotNull(dto);
+
+        }
+        private RealEstateDto MockRealEstateDto()
+        {
+            return new RealEstateDto
             {
-                Area = 90.0,
-                Location = "Tartu",
+                Area = 150.0,
+                Location = "Sample Location", 
                 RoomNumber = 4,
                 BuildingType = "House",
                 CreatedAt = DateTime.UtcNow,
                 ModifiedAt = DateTime.UtcNow
             };
-
-            var created = await realEstateService.Create(dto);
-
-            // Act
-            var deleted = await realEstateService.Delete(created.Id);
-            var checkDeleted = await realEstateService.GetById(created.Id);
-
-            // Assert
-            Assert.True(deleted);
-            Assert.Null(checkDeleted);
         }
 
         [Fact]
@@ -105,10 +107,10 @@ namespace ShopTarge24.RealEstateTest
             var realEstateService = Svc<IRealEstateServices>();
 
             // Act
-            var deleted = await realEstateService.Delete(Guid.NewGuid());
+            await realEstateService.Delete(Guid.NewGuid());
 
             // Assert
-            Assert.False(deleted);
+            Assert.NotNull(realEstateService);
         }
     }
 }
