@@ -121,9 +121,9 @@ namespace ShopTarge24.RealEstateTest
         {
             // Arrange
             //var dto = MockRealEstateDto(); -> minu versiooni algus
-            RealEstateDto dto = MockRealEstateDto();
+            var guid = new Guid("ade2c601-537e-4760-90dc-0c3f7f25b382");
 
-            Guid guid = Guid.Parse("ade2c601-537e-4760-90dc-0c3f7f25b382");
+            RealEstateDto dto = MockRealEstateDto();
 
             RealEstateDto domain = new();
 
@@ -167,10 +167,78 @@ namespace ShopTarge24.RealEstateTest
             // Assert
 
             // lõpus kontrollime, et andmed erinevad
-            Assert.NotEqual(createRealEstate.ModifiedAt, result.ModifiedAt);
-
+            Assert.NotEqual(createRealEstate.ModifiedAt, result.ModifiedAt);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             Assert.DoesNotMatch(result.Location, createRealEstate.Location);
         }
+
+        [Fact]
+        public async Task ShouldNot_UpdateRealEstate_WhenDidNotUpdateData()
+        {
+            // Arrange 
+            // Kasutada MockrRealEstateData meetodit, kus on andmed 
+            // Tuleb luua CREATE meetodit, et andmed luua
+            RealEstateDto dto = MockRealEstateData();
+            var createRealEstate = await Svc<IRealEstateServices>().Create(dto);
+
+            // Teha uues meetod nimega MockNullRealEstateData(),
+            // kus on tühjad andmed e null või ""
+            RealEstateDto update = MockNullRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(update);
+
+
+            // Assert - Toimub võrdlemine, et andmed ei ole võrdsed
+            Assert.NotEqual(createRealEstate.Id, result.Id);
+        }
+        // Meeskonna töö - Gervin, Jelena, Tauno
+        // ShouldNotUpdateImage_WhenUpdateData();
+        [Fact]
+        public async Task ShouldNotRenewCreatedAt_WhenUpdateData()
+        {
+            // Arrange 
+            // teeme muutuja CreatedAt originaliks, mis peab jääma
+            // loome meetodi Create
+            RealEstateDto dto = MockRealEstateDto();
+            var create = await Svc<IRealEstateServices>().Create(dto);
+            var originalCreatedAt = create.CreatedAt;
+
+            // Act - uuendame MockUpdateRealEstateData andmeid
+            RealEstateDto update = MockUpdateRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(update);
+
+            // Assert - vaatame üle, et uuendamisel ei muutuks CreatedAt kuupäev
+            Assert.NotEqual(originalCreatedAt, update.CreatedAt);
+        }
+        [Fact]
+        public async Task ShouldUpdateModifiedAt_WhenUpdateData()
+        {
+            // Arrange  loome meetod Create
+            RealEstateDto dto = MockRealEstateDto();
+            var create = await Svc<IRealEstateServices>().Create(dto);
+
+            // Act - uued MockUpdateRealEstateData andmed
+            RealEstateDto update = MockUpdateRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(update);
+
+            // Assert - kontrollime, et  modifiedAt muutuks
+            Assert.NotEqual(create.ModifiedAt, result.ModifiedAt);
+
+        }
+        [Fact]
+        public async Task ShouldCheckRealEstateIdIsUnique()
+        {
+            // Arrange - loome kaks objekti
+            RealEstateDto dto1 = MockRealEstateDto();
+            RealEstateDto dto2 = MockRealEstateDto();
+
+            // Act - kasutame Id andmete loomiseks
+            var create1 = await Svc<IRealEstateServices>().Create(dto1);
+            var create2 = await Svc<IRealEstateServices>().Create(dto2); 
+            
+            // Arrange - kontrollime, et Id ei ole ühtsed, vaid unikaalsed
+            Assert.NotEqual(create1.Id, create2.Id);
+
+        }
+
 
         private RealEstateDto MockRealEstateDto()
         {
@@ -181,7 +249,7 @@ namespace ShopTarge24.RealEstateTest
                 RoomNumber = 4,
                 BuildingType = "House",
                 CreatedAt = DateTime.UtcNow,
-                ModifiedAt = DateTime.UtcNow
+                ModifiedAt = DateTime.UtcNow, 
             };
         }
 
@@ -198,6 +266,34 @@ namespace ShopTarge24.RealEstateTest
             };
 
             return realEstate;
+        }
+
+        // ShouldNot_UpdateRealEstate_WhenDidNotUpdateData() mõlemad meetodid
+        private RealEstateDto MockRealEstateData()
+        {
+            return new RealEstateDto
+            {
+                Area = 2000.0,
+                Location = "Zombie Location",
+                RoomNumber = 1,
+                BuildingType = "House",
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow
+            };
+        }
+
+        private RealEstateDto MockNullRealEstateData()
+        {
+            return new RealEstateDto
+            {
+                Id = null, 
+                Area = 0,
+                Location = "",
+                RoomNumber = 0,
+                BuildingType = "",
+                CreatedAt = null,
+                ModifiedAt = null
+            };
         }
     }
 }
