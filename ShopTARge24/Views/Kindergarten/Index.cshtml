@@ -27,11 +27,11 @@
         <tbody>
             @foreach (var kindergarten in Model)
             {
-                <tr>
+                <tr>	
                     <td>@kindergarten.Id</td>
-                    <td>@kindergarten.KindergartenName</td>
+                    <td id="kgIndexName">@kindergarten.KindergartenName</td>
                     <td>@kindergarten.GroupName</td>
-                    <td>@kindergarten.TeacherName</td>
+                    <td id="kgIndexTeacher">@kindergarten.TeacherName</td>
                     <td>@kindergarten.ChildrenCount</td>
                     <td>@kindergarten.CreatedAt</td>
                     <td>@kindergarten.UpdatedAt</td>
