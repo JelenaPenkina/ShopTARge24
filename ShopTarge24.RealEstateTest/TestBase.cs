@@ -25,6 +25,7 @@ namespace ShopTarge24.RealEstateTest
         public virtual void SetupServices(IServiceCollection services)
         {
             services.AddScoped<IRealEstateServices, RealEstateServices>();
+            services.AddScoped<ISpaceshipServices, SpaceshipServices>();
             services.AddScoped<IFileServices, FileServices>();
             services.AddScoped<IHostEnvironment, MockIHostEnviroment>();
 
