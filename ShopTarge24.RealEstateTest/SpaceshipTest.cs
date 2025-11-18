@@ -1,5 +1,7 @@
-﻿using ShopTARge24.Core.Dto;
+﻿using System.Reflection.Emit;
+using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
+using ShopTARge24.Data;
 
 namespace ShopTarge24.RealEstateTest
 {
@@ -81,6 +83,7 @@ namespace ShopTarge24.RealEstateTest
             // Kontrollin, et teised objektid jäävad samaks
             Assert.Equal(createSpaceship.Crew, result.Crew);
         }
+    
 
         private SpaceshipDto MockSpaceshipDto()
         {
