@@ -10,9 +10,11 @@ namespace KindergartenTest
 {
     public class KindergartenTest : TestBase
     {
+
         [Fact]
         public async Task Should_RemoveImage_WhenImageIsDeleted()
         {
+
             // Arrange
             var dto = MockKindergartenDto();
             var created = await Svc<IKindergartenServices>().Create(dto);

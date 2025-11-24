@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ShopTARge24.Core.Domain;
+﻿using ShopTARge24.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopTARge24.Data
 {
