@@ -86,7 +86,7 @@ namespace ShopTARge24.ApplicationServices.Services
 
                 }).ToArrayAsync();
 
-            await _fileServices.RemoveFilesFromDatabase(images);
+            await _fileServices.RemoveImagesFromDatabase(images);
 
             _context.RealEstates.Remove(result);
             await _context.SaveChangesAsync();
