@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
-namespace ShopTARge24KindergartenTest
+namespace ShopTARge24.KindergartenTest
 {
     internal class MockIHostEnviroment : IHostEnvironment
     {

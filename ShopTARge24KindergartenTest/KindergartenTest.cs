@@ -5,7 +5,7 @@ using ShopTARge24.Core.Dto;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
 
-namespace ShopTARge24KindergartenTest
+namespace ShopTARge24.KindergartenTest
 {
     public class KindergartenTest : TestBase
     {

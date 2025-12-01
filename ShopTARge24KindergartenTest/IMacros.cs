@@ -1,4 +1,4 @@
-﻿namespace ShopTARge24KindergartenTest
+﻿namespace ShopTARge24.KindergartenTest
 {
     public interface IMacros
     {

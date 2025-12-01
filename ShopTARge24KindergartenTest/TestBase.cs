@@ -6,7 +6,7 @@ using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShopTARge24KindergartenTest
+namespace ShopTARge24.KindergartenTest
 {
     public abstract class TestBase
     {
