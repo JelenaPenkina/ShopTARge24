@@ -319,7 +319,7 @@ namespace ShopTarge24.RealEstateTest
             {
                 Area = null,
                 Location = null,
-                RoomNumber = null,
+                RoomNumber = 0,
                 BuildingType = null,
                 CreatedAt = null,
                 ModifiedAt = null,
