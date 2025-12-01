@@ -1,21 +1,19 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using MimeKit;
 using ShopTARge24.Core.Dto;
+using MailKit.Net.Smtp;
+using ShopTARge24.Core.ServiceInterface;
 
 namespace ShopTARge24.ApplicationServices.Services
 {
-    public class EmailServices
+    public class EmailServices : IEmailServices
     {
-
         private readonly IConfiguration _config;
-
         public EmailServices(IConfiguration config)
         {
             _config = config;
         }
-        public async Task SendEmail(EmailDto dto)
+        public void SendEmail(EmailDto dto)
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
@@ -33,15 +31,38 @@ namespace ShopTARge24.ApplicationServices.Services
             // tuleb teha foreach tsükkel, kus läbib kõik dto.Attachment failid ja lisab need emailile
             // kui failide arv või faili suurus on alla mingi piiri, siis ei lisa faili 
 
-            if (dto.Attachment != null && dto.Attachment.Count < 0)
+            // ÕPETAJA VERSIOON
+            foreach (var file in dto.Attachment)
             {
-                var files = new List<string>();
-
-                foreach (var attachment in dto.Attachment)
+                if (file.Length > 0 && file.Length < 10485760)
                 {
-                    files.Add(attachment.Name);
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        ms.Position = 0;
+                        builder.Attachments.Add(file.FileName, ms.ToArray());
+                    }
                 }
             }
+            email.Body = builder.ToMessageBody();
+
+            using var smtp = new SmtpClient();
+
+            smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
+
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+            //if (dto.Attachment != null && dto.Attachment.Count < 0)
+            //{
+            //    var files = new List<string>();
+
+            //    foreach (var attachment in dto.Attachment)
+            //    {
+            //        files.Add(attachment.Name);
+            //    }
+            //}
         }
     }
 }
