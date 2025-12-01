@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24.Data", "..\Shop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTarge24.RealEstateTest", "..\ShopTarge24.RealEstateTest\ShopTarge24.RealEstateTest.csproj", "{390F9D21-856A-4828-81B8-53E296ED8255}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24KindergartenTest", "..\ShopTARge24KindergartenTest\ShopTARge24KindergartenTest.csproj", "{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24.KindergartenTest", "..\ShopTARge24KindergartenTest\ShopTARge24.KindergartenTest.csproj", "{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
