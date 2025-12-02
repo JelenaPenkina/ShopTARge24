@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Coctails\**" />
+    <Content Remove="Views\Coctails\**" />
+    <EmbeddedResource Remove="Views\Coctails\**" />
+    <None Remove="Views\Coctails\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.14.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
@@ -26,7 +33,7 @@
     <Folder Include="Models\Kindergarten\" />
     <Folder Include="Models\Coctails\" />
     <Folder Include="Views\Kindergarten\" />
-    <Folder Include="Views\Coctails\" />
+    <Folder Include="wwwroot\lib\microsoft\signalr\dist\browser\" />
   </ItemGroup>
 
 </Project>

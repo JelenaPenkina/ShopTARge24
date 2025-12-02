@@ -3,11 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.ApplicationServices.Services;
 using Microsoft.Extensions.FileProviders;
+using ShopTARge24.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Add SignalR in our project
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
 builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
@@ -56,5 +59,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapHub<UserHub>("/hubs/userCount");
 
 app.Run();
