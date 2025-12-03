@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopTARge24.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,10 +45,10 @@ namespace ShopTARge24.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChildrenCount = table.Column<int>(type: "int", nullable: false),
-                    KindergartenName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeacherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KindergartenName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TeacherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

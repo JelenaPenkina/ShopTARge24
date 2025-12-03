@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Coctails\**" />
     <Compile Remove="Views\Coctails\**" />
+    <Content Remove="Models\Coctails\**" />
     <Content Remove="Views\Coctails\**" />
+    <EmbeddedResource Remove="Models\Coctails\**" />
     <EmbeddedResource Remove="Views\Coctails\**" />
+    <None Remove="Models\Coctails\**" />
     <None Remove="Views\Coctails\**" />
   </ItemGroup>
 
@@ -31,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Kindergarten\" />
-    <Folder Include="Models\Coctails\" />
     <Folder Include="Views\Kindergarten\" />
     <Folder Include="wwwroot\lib\microsoft\signalr\dist\browser\" />
   </ItemGroup>

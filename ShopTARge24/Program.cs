@@ -1,4 +1,4 @@
-using ShopTARge24.Data;
+﻿using ShopTARge24.Data;
 using Microsoft.EntityFrameworkCore;
 using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.ApplicationServices.Services;
@@ -18,7 +18,7 @@ builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
 builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
 builder.Services.AddScoped<OpenWeatherServices>();
-builder.Services.AddScoped<IEmailServices,EmailServices>();
+builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IChuckNorrisServices, ChuckNorrisServices>();
@@ -49,7 +49,7 @@ app.MapStaticAssets();
 
 app.UseStaticFiles(new StaticFileOptions
 {
-   FileProvider = new PhysicalFileProvider(
+    FileProvider = new PhysicalFileProvider(
         Path.Combine(builder.Environment.ContentRootPath, "multipleFileUpload")),
     RequestPath = "/multipleFileUpload"
 });

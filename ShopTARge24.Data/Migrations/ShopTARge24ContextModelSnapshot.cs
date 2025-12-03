@@ -78,15 +78,12 @@ namespace ShopTARge24.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GroupName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KindergartenName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeacherName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
