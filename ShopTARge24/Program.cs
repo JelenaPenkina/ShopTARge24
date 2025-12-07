@@ -60,5 +60,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapHub<UserHub>("/hubs/userCount");
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.Run();
