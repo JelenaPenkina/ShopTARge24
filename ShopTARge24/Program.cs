@@ -4,6 +4,8 @@ using ShopTARge24.Core.ServiceInterface;
 using ShopTARge24.ApplicationServices.Services;
 using Microsoft.Extensions.FileProviders;
 using ShopTARge24.Hubs;
+using Microsoft.AspNetCore.Identity;
+using ShopTARge24.Core.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +26,18 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IChuckNorrisServices, ChuckNorrisServices>();
 builder.Services.AddHttpClient<ICocktailServices, CocktailServices>();
 
-
 builder.Services.AddDbContext<ShopTARge24Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
+
+//builder.Services.AddIdentity<Automobile.Models.Account, IdentityRole>(options =>
+//{
+//    options.User.RequireUniqueEmail = false;
+//})
+//    .AddEntityFrameworkStores<Providers.Database.EFProvider.DataContext>()
+//    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
