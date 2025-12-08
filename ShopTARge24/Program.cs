@@ -30,7 +30,12 @@ builder.Services.AddDbContext<ShopTARge24Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+    )
+    .AddEntityFrameworkStores<ShopTARge24Context>()
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
+    //.AddDefaulUI();
 
 //builder.Services.AddIdentity<Automobile.Models.Account, IdentityRole>(options =>
 //{

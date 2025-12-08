@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShopTARge24.Core.Domain;
 
@@ -20,7 +21,7 @@ namespace ShopTARge24.Data
         public DbSet<RealEstate> RealEstates { get; set; }
         public DbSet<FileToDatabase> FileToDatabases { get; set; }
 
-
+        public DbSet<IdentityRole> IdentityRoles { get; set; }
 
     }
 }
