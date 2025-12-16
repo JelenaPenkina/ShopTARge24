@@ -30,8 +30,15 @@ builder.Services.AddDbContext<ShopTARge24Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
-    )
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequiredLength = 3;
+
+    options.Tokens.EmailConfirmationTokenProvider = "CutsomEmailConfirmation";
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+})
     .AddEntityFrameworkStores<ShopTARge24Context>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
