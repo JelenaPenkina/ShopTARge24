@@ -46,6 +46,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
 
 var app = builder.Build();
 
+// aitab vältida iga controllerisse kirjutada, et autoriseerimine vajalik
+app.MapControllers().RequireAuthorization();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
