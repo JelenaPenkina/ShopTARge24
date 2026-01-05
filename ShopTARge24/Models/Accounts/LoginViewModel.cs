@@ -16,9 +16,5 @@ namespace ShopTARge24.Models.Accounts
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
 
-        [Required]
-        public string ClientID { get; set; } = string.Empty;
-        [Required]
-        public string? ClientSecret { get; set; }
     }
 }

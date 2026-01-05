@@ -1,12 +1,13 @@
-﻿using ShopTARge24.Data;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShopTARge24.Core.ServiceInterface;
-using ShopTARge24.ApplicationServices.Services;
-using Microsoft.Extensions.FileProviders;
-using ShopTARge24.Hubs;
-using Microsoft.AspNetCore.Identity;
-using ShopTARge24.Core.Domain;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
+using ShopTARge24.ApplicationServices.Services;
+using ShopTARge24.Core.Domain;
+using ShopTARge24.Core.ServiceInterface;
+using ShopTARge24.Data;
+using ShopTARge24.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,7 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
 });
+
 //builder.Services.AddIdentity<Automobile.Models.Account, IdentityRole>(options =>
 //{
 //    options.User.RequireUniqueEmail = false;
@@ -77,6 +79,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
