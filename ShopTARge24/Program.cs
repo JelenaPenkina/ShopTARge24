@@ -6,6 +6,7 @@ using Microsoft.Extensions.FileProviders;
 using ShopTARge24.Hubs;
 using Microsoft.AspNetCore.Identity;
 using ShopTARge24.Core.Domain;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +43,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ShopTARge24Context>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
-    //.AddDefaulUI();
+//.AddDefaulUI();
 
+//var configuration = builder.Configuration;
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
+});
 //builder.Services.AddIdentity<Automobile.Models.Account, IdentityRole>(options =>
 //{
 //    options.User.RequireUniqueEmail = false;

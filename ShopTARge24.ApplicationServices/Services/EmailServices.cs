@@ -31,10 +31,9 @@ namespace ShopTARge24.ApplicationServices.Services
             // tuleb teha foreach tsükkel, kus läbib kõik dto.Attachment failid ja lisab need emailile
             // kui failide arv või faili suurus on alla mingi piiri, siis ei lisa faili 
 
-            // ÕPETAJA VERSIOON
             foreach (var file in dto.Attachment)
             {
-                if (file.Length > 0 && file.Length < 10485760)
+                if (file.Length > 0 && file.Length < 10485760) //10MB
                 {
                     using (var ms = new MemoryStream())
                     {
