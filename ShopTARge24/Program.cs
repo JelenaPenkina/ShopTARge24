@@ -48,11 +48,28 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 //var configuration = builder.Configuration;
 
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
-});
+//builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+//{
+//    googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
+//    googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
+//});
+
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"]
+            ?? throw new InvalidOperationException("Google ClientId not found.");
+
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]
+            ?? throw new InvalidOperationException("Google ClientSecret not found.");
+    });
+
+
+//builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+//{
+//    microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+//    microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+//});
 
 //builder.Services.AddIdentity<Automobile.Models.Account, IdentityRole>(options =>
 //{

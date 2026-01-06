@@ -308,16 +308,19 @@ namespace ShopTARge24.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        public IActionResult ExternalLogin(string provider, string? returnUrl)
         {
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Accounts", new { returnUrl });
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Accounts", new { ReturnUrl = returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return Challenge(properties, provider);
+            return new ChallengeResult(provider, properties);
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback(string? returnUrl, string? remoteError)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
             if (remoteError != null)
             {
                 ModelState.AddModelError("", $"Error from external provider: {remoteError}");
@@ -330,27 +333,33 @@ namespace ShopTARge24.Controllers
                 return RedirectToAction("Login");
             }
 
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(
-                info.LoginProvider,
-                info.ProviderKey,
-                isPersistent: false);
+            var result = await _signInManager.ExternalLoginSignInAsync(
+                info.LoginProvider, info.ProviderKey,
+                isPersistent: false, bypassTwoFactor: true);
 
-            if (signInResult.Succeeded)
+            if (result.Succeeded)
             {
                 return RedirectToLocal(returnUrl);
             }
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var user = new ApplicationUser
+            if (email != null)
             {
-                UserName = email,
-                Email = email,
-                EmailConfirmed = true
-            };
+                var user = await _userManager.FindByEmailAsync(email);
 
-            var result = await _userManager.CreateAsync(user);
-            if (result.Succeeded)
-            {
+                if (user == null)
+                {
+                    user = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        Name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? email,
+                        EmailConfirmed = true,
+                        City = "Unknown"
+                    };
+
+                    await _userManager.CreateAsync(user);
+                }
                 await _userManager.AddLoginAsync(user, info);
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
@@ -368,7 +377,67 @@ namespace ShopTARge24.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //// Microsofti jaoks 
 
+        //[HttpPost]
+        //public IActionResult ExternalLogin2(string provider, string returnUrl = "/")
+        //{
+        //    var redirectUrl = Url.Action(
+        //        nameof(ExternalLoginCallback),
+        //        "Accounts",
+        //        new { returnUrl });
+
+        //    var properties = _signInManager.ConfigureExternalAuthenticationProperties(
+        //        provider,
+        //        redirectUrl);
+
+        //    return Challenge(properties, provider);
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> ExternalLoginCallback2(string returnUrl = "/", string remoteError = null)
+        //{
+        //    if (remoteError != null)
+        //    {
+        //        return RedirectToAction("Login", new { error = remoteError });
+        //    }
+
+        //    var info = await _signInManager.GetExternalLoginInfoAsync();
+        //    if (info == null)
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+
+        //    var signInResult = await _signInManager.ExternalLoginSignInAsync(
+        //        info.LoginProvider,
+        //        info.ProviderKey,
+        //        isPersistent: false);
+
+        //    if (signInResult.Succeeded)
+        //    {
+        //        return LocalRedirect(returnUrl);
+        //    }
+
+        //    // Kui kasutajat ei ole, loome uue
+        //    var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+        //    var user = new IdentityUser { UserName = email, Email = email };
+        //    var createResult = await _userManager.CreateAsync((ApplicationUser)user);
+
+        //    if (createResult.Succeeded)
+        //    {
+        //        await _userManager.AddLoginAsync((ApplicationUser)user, info);
+        //        await _signInManager.SignInAsync((ApplicationUser)user, isPersistent: false);
+
+        //        return LocalRedirect(returnUrl);
+        //    }
+
+        //    return RedirectToAction("Login");
+        //}
     }
+
+
+
 }
+
  
