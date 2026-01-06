@@ -43,17 +43,18 @@
     <div class="col-md-6">
         <h1>External Login</h1>
         <hr />
-@*         <form asp-controller="Accounts"
-              asp-action="ExternalLogin"
-              method="post">
+       <form asp-controller="Accounts"
+                  asp-action="ExternalLogin"
+                  asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]"
+                  method="post">
+                @Html.AntiForgeryToken()
 
-            <input type="hidden" name="provider" value="Google" />
-
-            <button type="submit" class="btn btn-danger">
-                Login with Google
-            </button>
-        </form> *@
-        <script src="https://accounts.google.com/gsi/client" async></script>
+                <button type="submit" class="btn btn-primary" name="provider" value="Google">
+                    Google
+                </button>
+        </form>
+   
+@*         <script src="https://accounts.google.com/gsi/client" async></script>
 
         <div id="g_id_onload"
              data-client_id=""
@@ -68,7 +69,7 @@
              data-text="sign_in_with"
              data-shape="rectangular"
              data-logo_alignment="left">
-        </div>
+        </div> *@
         <hr />
         <form asp-controller="Accounts" asp-action="ExternalLogin" asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]" method="post">
            <button type="submit" class="btn btn-primary" name="provider" value="Microsoft">
@@ -77,22 +78,6 @@
         </form>
     </div>
 </div>
-   
-@* 		Minu kood:	
-    <div>
-				<input type="checkbox" id="remember" name="remember">
-				<label for="remember" class="remember-label">Remember me</label>
-			</div>
-
-            <button type="submit" class="btn btn-primary">
-                Login
-            </button>
-
-            <br />
-            <a href="/forgot-password" class="forgot-link">
-                Forgot Password?
-            </a>    
-        </form> *@
 
 
 

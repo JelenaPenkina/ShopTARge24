@@ -305,76 +305,83 @@ namespace ShopTARge24.Controllers
             }
             return View(model);
         }
-
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string? returnUrl)
         {
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Accounts", new { ReturnUrl = returnUrl });
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Accounts", new { returnUrl = returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
+
+            return Challenge(properties, provider);
         }
 
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string? returnUrl, string? remoteError)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
-            if (remoteError != null)
+            if (!string.IsNullOrWhiteSpace(remoteError))
             {
-                ModelState.AddModelError("", $"Error from external provider: {remoteError}");
-                return RedirectToAction("Login");
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View("Login");
             }
 
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
-            {
                 return RedirectToAction("Login");
-            }
 
             var result = await _signInManager.ExternalLoginSignInAsync(
-                info.LoginProvider, info.ProviderKey,
-                isPersistent: false, bypassTwoFactor: true);
+                info.LoginProvider,
+                info.ProviderKey,
+                isPersistent: false,
+                bypassTwoFactor: true);
 
             if (result.Succeeded)
-            {
-                return RedirectToLocal(returnUrl);
-            }
+                return LocalRedirect(returnUrl);
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            if (email != null)
+            if (string.IsNullOrWhiteSpace(email))
             {
-                var user = await _userManager.FindByEmailAsync(email);
+                ModelState.AddModelError(string.Empty, "Email not received from Google.");
+                return View("Login");
+            }
 
-                if (user == null)
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
                 {
-                    user = new ApplicationUser
-                    {
-                        UserName = email,
-                        Email = email,
-                        Name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? email,
-                        EmailConfirmed = true,
-                        City = "Unknown"
-                    };
+                    UserName = email,
+                    Email = email,
+                    Name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? email,
+                    City = "Unknown",
+                    EmailConfirmed = true
+                };
 
-                    await _userManager.CreateAsync(user);
+                var createResult = await _userManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                {
+                    foreach (var error in createResult.Errors)
+                        ModelState.AddModelError(string.Empty, error.Description);
+
+                    return View("Login");
                 }
-                await _userManager.AddLoginAsync(user, info);
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToLocal(returnUrl);
             }
 
-            return RedirectToAction("Login");
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+            if (!addLoginResult.Succeeded)
             {
-                return Redirect(returnUrl);
+                foreach (var error in addLoginResult.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
+
+                return View("Login");
             }
-            return RedirectToAction("Index", "Home");
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return LocalRedirect(returnUrl);
         }
 
         //// Microsofti jaoks 
