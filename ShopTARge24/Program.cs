@@ -54,7 +54,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 //    googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
 //    googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
 //toimib//});
-
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
     {
@@ -64,6 +63,20 @@ builder.Services.AddAuthentication()
         googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]
             ?? throw new InvalidOperationException("Google ClientSecret not found.");
     });
+
+
+//builder.Services.AddAuthentication()
+//    .AddFacebook(facebookOptions =>
+//    {
+//        facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+//        facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+
+//        // Kui soovid kontrollida, kas väärtused on olemas
+//        if (string.IsNullOrEmpty(facebookOptions.AppSecret))
+//        {
+//            throw new InvalidOperationException("Facebook AppSecret not found.");
+//        }
+//    });
 
 
 //builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
