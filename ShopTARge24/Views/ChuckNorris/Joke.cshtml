@@ -41,6 +41,14 @@
         <form method="post">
             <button asp-controller="chuckNorris" asp-action="searchChuckNorrisJokes" class="btn btn-primary">Joke</button>
         </form>
-        <button asp-controller="chuckNorris" asp-action="index" class="btn btn-primary">Index</button>
+        @* <button asp-controller="chuckNorris" asp-action="Index" class="btn btn-primary ms-2">Index</button> *@
+
+        <form method="get" class="d-inline">
+            <button type="submit"
+                    formaction="@Url.Action("Index", "ChuckNorris")"
+                    class="btn btn-primary ms-2">
+                Back to Index
+            </button>
+        </form>
     </div>
 </div>

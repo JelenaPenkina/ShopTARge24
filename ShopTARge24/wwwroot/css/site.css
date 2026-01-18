@@ -1,43 +1,343 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* ---------------------
+   BASE PAGE STYLING
+---------------------- */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #F5F1E8;
+    color: #333333;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* ---------------------
+   NAVIGATION BAR
+---------------------- */
+.navbar {
+    background-color: #F5F1E8 !important;
+    border-bottom: 1px solid #ddd;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    .navbar .nav-link {
+        color: #333 !important;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+        .navbar .nav-link:hover {
+            color: #258CFB !important;
+            text-decoration: underline;
+        }
+
+.navbar-brand {
+    color: #333 !important;
+    font-weight: bold;
 }
 
-/*Minu koodi Login vaate jaoks*/
-.title-row {
+    .navbar-brand:hover {
+        color: #258CFB !important;
+    }
+
+/* ---------------------
+   PAGE TITLES
+---------------------- */
+h1, h2, h3, h4, h5 {
+    color: #333;
+    font-weight: bold;
+}
+
+/* ---------------------
+   TABLE STYLING - FIXED
+---------------------- */
+/* Tabeli konteiner */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* Tabel ise */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+/* Veerupäised */
+thead th {
+    background-color: #1E3A8A !important;
+    color: white !important;
+    font-weight: bold !important;
+    padding: 12px 8px !important;
+    text-align: left;
+    border: none;
+    white-space: nowrap;
+}
+
+/* Tabeli lahtrid */
+tbody td {
+    padding: 10px 8px !important;
+    border-top: 1px solid #ddd;
+    color: #333;
+    vertical-align: middle;
+    word-wrap: break-word;
+    white-space: normal; /* Lubame tekstil murduda */
+}
+
+/* Ei peida teksti ellipsisega */
+th, td {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    max-width: none !important;
+}
+
+/* Tabeli piirjooned */
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #ddd;
+    }
+
+/* Hover efekt */
+tbody tr:hover {
+    background-color: #f0ece3;
+}
+
+/* Paaritute ridade värv */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Nuppude veerg - veendume, et nupud on nähtavad */
+td:last-child {
+    white-space: nowrap; /* Nupud samal real */
+    min-width: 200px; /* Tagab ruumi nuppudele */
+}
+
+/* ---------------------
+   BUTTON STYLING - FIXED
+---------------------- */
+/* Nupud tabelis */
+.btn {
+    border-radius: 20px !important;
+    padding: 6px 15px !important;
+    font-weight: bold !important;
+    margin: 2px !important;
+    transition: 0.3s;
+    font-size: 0.85rem !important;
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* Nupugrupp - kõik nupud samal real */
+.btn-group {
     display: flex;
-    justify-content: space-between; /* vasak ja parem */
-    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
 }
 
-.title-row h1 {
-   margin: 0;
-   font-size: 24px;
+.btn-group .btn {
+     margin: 0 !important;
+     flex-shrink: 0;
 }
+
+/* PRIMARY BUTTONS — blue */
+.btn-primary,
+.btn-info,
+.btn-success {
+    background-color: #258CFB !important;
+    border-color: #258CFB !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn-primary:hover,
+.btn-info:hover,
+.btn-success:hover {
+    background-color: #60A8FF !important;
+}
+
+/* WARNING BUTTON */
+.btn-warning {
+    background-color: #FFD700 !important;
+    color: #000 !important;
+    border: none !important;
+}
+
+.btn-warning:hover {
+    background-color: #FFE34D !important;
+}
+
+/* DANGER BUTTON — red */
+.btn-danger,
+.btn-outline-danger {
+    background-color: #ff4d4d !important;
+    border: none !important;
+    color: white !important;
+}
+
+    .btn-danger:hover,
+    .btn-outline-danger:hover {
+        background-color: #ff8080 !important;
+    }
+
+/* Details nupp */
+.btn-details {
+    background-color: #258CFB !important;
+}
+
+/* Update nupp */
+.btn-update {
+    background-color: #FFD700 !important;
+    color: #000 !important;
+}
+
+/* Delete nupp */
+.btn-delete {
+    background-color: #ff4d4d !important;
+}
+
+/* ---------------------
+   SPECIFIC TABLE FIXES
+---------------------- */
+/* Veeru laiused */
+th:nth-child(1), td:nth-child(1) { /* Nr veerg */
+    width: 50px;
+    text-align: center;
+}
+
+th:nth-child(2), td:nth-child(2) { /* Name veerg */
+    width: 150px;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Type veerg */
+    width: 100px;
+}
+
+th:nth-child(4), td:nth-child(4) { /* Date veerg */
+    width: 120px;
+}
+
+th:nth-child(5), td:nth-child(5) { /* Crew veerg */
+    width: 80px;
+    text-align: center;
+}
+
+th:last-child, td:last-child { /* Actions veerg */
+    width: 220px;
+    text-align: center;
+}
+
+/* Kindergarten tabeli veeru laiused */
+#kindergartenTable th:nth-child(1),
+#kindergartenTable td:nth-child(1) { /* ID veerg */
+    width: 280px;
+}
+
+#kindergartenTable th:nth-child(5),
+#kindergartenTable td:nth-child(5) { /* Children Count */
+    width: 100px;
+    text-align: center;
+}
+
+#kindergartenTable th:last-child,
+#kindergartenTable td:last-child { /* Actions */
+    width: 250px;
+    text-align: center;
+}
+
+/* RealEstate tabeli veeru laiused */
+#realEstateTable th:last-child,
+#realEstateTable td:last-child { /* Actions */
+    width: 250px;
+    text-align: center;
+}
+
+/* ---------------------
+   DATE FIELDS FIX
+---------------------- */
+/* Date veerud - näita kogu kuupäeva */
+td[data-date="true"] {
+    white-space: nowrap;
+    min-width: 140px;
+}
+
+/* ---------------------
+   CREATE BUTTON
+---------------------- */
+.btn-create {
+    margin-bottom: 15px;
+    background-color: #258CFB !important;
+    color: white !important;
+    padding: 8px 20px !important;
+    border-radius: 25px !important;
+}
+
+/* ---------------------
+   FOOTER FIX - eemalda valge tühi ala
+---------------------- */
+html, body {
+    height: 100%;
+}
+
+.container {
+    min-height: calc(100vh - 150px);
+    padding-bottom: 20px;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #F5F1E8;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+.h1 {
+    color: #333;
+    font-weight: bold;
+    margin: 20px 0 15px 0;
+    font-size: 1.8rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1E3A8A !important;
+    width: 100%;
+    display: block;
+}
+
+/* ---------------------
+   REALESTATE TABLE FIX
+---------------------- */
+/* Veenduge, et kõik veerud oleksid nähtavad */
+table.table-hover th {
+    background-color: #1E3A8A !important;
+    color: white !important;
+    padding: 12px 15px !important;
+}
+
+/* Actions veerg - tagage, et nupud on samal real */
+td:last-child {
+    white-space: nowrap !important;
+    min-width: 220px !important;
+}
+
+/* Nupud ühel real */
+.btn-group {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 5px !important;
+}
+
+    .btn-group .btn {
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+    }

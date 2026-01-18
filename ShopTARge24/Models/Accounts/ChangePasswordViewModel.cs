@@ -15,7 +15,7 @@ namespace ShopTARge24.Models.Accounts
         [Required]
         // kontrollib, et oleks võrdne uue parooliga 
         [Compare("NewPassword", ErrorMessage = "The new password and confirmed password do not match")]
-
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set;} = string.Empty;
 
     }

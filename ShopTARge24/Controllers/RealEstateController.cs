@@ -36,6 +36,7 @@ namespace ShopTARge24.Controllers
                 {
                     Id = x.Id,
                     Area = x.Area,
+                    Location = x.Location,
                     BuildingType = x.BuildingType,
                     RoomNumber = x.RoomNumber,
                 });
@@ -116,7 +117,7 @@ namespace ShopTARge24.Controllers
             vm.ModifiedAt = realEstate.ModifiedAt;
             vm.Image.AddRange(images);
 
-            return View("NotFound", id);
+            return View("CreateUpdate", vm);
         }
 
         [HttpPost]
@@ -184,7 +185,7 @@ namespace ShopTARge24.Controllers
             vm.ModifiedAt = realEstate.ModifiedAt;
             vm.Image.AddRange(images);
 
-            return View("NotFound", id);
+            return View(vm);
         }
 
         [HttpPost]
@@ -226,7 +227,7 @@ namespace ShopTARge24.Controllers
             vm.ModifiedAt = realEstate.ModifiedAt;
             vm.Images.AddRange(images);
 
-            return View("NotFound", id);
+            return View("Details", vm);
         }
 
         private async Task<RealEstateImageViewModel[]> FileFromDatabase(Guid id)

@@ -53,7 +53,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 //{
 //    googleOptions.ClientId = ""; // configuration["Authentication:Google:ClientId"];
 //    googleOptions.ClientSecret = ""; // configuration["Authentication:Google:ClientSecret"];
-//});
+//toimib//});
 
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>

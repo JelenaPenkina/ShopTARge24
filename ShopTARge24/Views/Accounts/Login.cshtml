@@ -4,59 +4,72 @@
     ViewBag.Title = "User Login";
 }
 
-<div class="row">
-    <div class="col-md-6">
-        <h1>Local Account Login</h1>
-        <hr />
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-5">
+        <div class="login-box">
+            <h2>Local Account Login</h2>
+            <hr />
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <div class="checkbox">
-                    <label asp-for="RememberMe">
-                        <input asp-for="RememberMe" />
-                        @Html.DisplayNameFor(m => m.RememberMe)
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>
+                        <input asp-for="RememberMe" /> @Html.DisplayNameFor(m => m.RememberMe)
                     </label>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary">
-                Login
-            </button>
-            <div>
-                <a asp-action="ForgotPassword">Forgot Password?</a>
-            </div>
-        </form>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                <div class="mt-2">
+                    <a asp-action="ForgotPassword">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="col-md-6">
-        <h1>External Login</h1>
-        <hr />
-       <form asp-controller="Accounts"
+    <div class="col-md-5">
+        <div class="login-box">
+            <h2>External Login</h2>
+            <hr />
+
+            <form asp-controller="Accounts"
                   asp-action="ExternalLogin"
                   asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]"
                   method="post">
                 @Html.AntiForgeryToken()
 
-                <button type="submit" class="btn btn-primary" name="provider" value="Google">
-                    Google
+                <button type="submit" class="btn btn-primary w-100" name="provider" value="Google">
+                    Login with Google
                 </button>
-        </form>
-   
-@*         <script src="https://accounts.google.com/gsi/client" async></script>
+            </form>
 
-        <div id="g_id_onload"
+            <br />
+
+            <form asp-controller="Accounts"
+                  asp-action="ExternalLogin"
+                  asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]"
+                  method="post">
+                <button type="submit" class="btn btn-primary w-100" name="provider" value="Facebook">
+                    Login with Facebook
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+@*         <div id="g_id_onload"
              data-client_id=""
              data-login_uri="https://localhost:7255"
              data-auto_prompt="false">
@@ -69,15 +82,8 @@
              data-text="sign_in_with"
              data-shape="rectangular"
              data-logo_alignment="left">
-        </div> *@
-        <hr />
-        <form asp-controller="Accounts" asp-action="ExternalLogin" asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]" method="post">
-           <button type="submit" class="btn btn-primary" name="provider" value="Microsoft">
-               Microsoft
-           </button>
-        </form>
-    </div>
-</div>
+        </div>  *@
+
 
 
 
