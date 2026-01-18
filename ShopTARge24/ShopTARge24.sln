@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTarge24.RealEstateTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24.KindergartenTest", "..\ShopTARge24KindergartenTest\ShopTARge24.KindergartenTest.csproj", "{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactcrud.client", "..\ReactCRUD\reactcrud.client\reactcrud.client.esproj", "{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Server", "..\ReactCRUD\ReactCRUD.Server\ReactCRUD.Server.csproj", "{DC995C6F-71BF-4115-B806-4B383B0281C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,16 @@ Global
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DC995C6F-71BF-4115-B806-4B383B0281C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC995C6F-71BF-4115-B806-4B383B0281C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC995C6F-71BF-4115-B806-4B383B0281C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC995C6F-71BF-4115-B806-4B383B0281C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
