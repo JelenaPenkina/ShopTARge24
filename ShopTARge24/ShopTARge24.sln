@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11408.102 d18.0
+VisualStudioVersion = 18.2.11408.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24", "ShopTARge24.csproj", "{027C0A13-88BD-47DC-A503-08CBA25A2FA2}"
 EndProject
@@ -14,6 +14,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTarge24.RealEstateTest", "..\ShopTarge24.RealEstateTest\ShopTarge24.RealEstateTest.csproj", "{390F9D21-856A-4828-81B8-53E296ED8255}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge24.KindergartenTest", "..\ShopTARge24KindergartenTest\ShopTARge24.KindergartenTest.csproj", "{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactCRUD", "ReactCRUD", "{FE881764-E42C-443C-B5C7-CA083CB5AC21}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactcrud.client", "..\ReactCRUD\reactcrud.client\reactcrud.client.esproj", "{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Server", "..\ReactCRUD\ReactCRUD.Server\ReactCRUD.Server.csproj", "{75EFE582-DFAD-4355-8AF3-9214A90C6854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Core", "..\ReactCRUD\ReactCRUD.Core\ReactCRUD.Core.csproj", "{4D805CE9-5691-4F14-888C-BADCCA684ED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Data", "..\ReactCRUD\ReactCRUD.Data\ReactCRUD.Data.csproj", "{55BD880D-AB24-45C8-874B-6613DB824FB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +55,33 @@ Global
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A78F2C7D-87C9-4B8D-B54A-EF609D94FB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{75EFE582-DFAD-4355-8AF3-9214A90C6854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75EFE582-DFAD-4355-8AF3-9214A90C6854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75EFE582-DFAD-4355-8AF3-9214A90C6854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75EFE582-DFAD-4355-8AF3-9214A90C6854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D805CE9-5691-4F14-888C-BADCCA684ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D805CE9-5691-4F14-888C-BADCCA684ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D805CE9-5691-4F14-888C-BADCCA684ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D805CE9-5691-4F14-888C-BADCCA684ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0FA8BF4-DBCD-C1FD-7A10-B9DD2371B19F} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
+		{75EFE582-DFAD-4355-8AF3-9214A90C6854} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
+		{4D805CE9-5691-4F14-888C-BADCCA684ED0} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
+		{55BD880D-AB24-45C8-874B-6613DB824FB7} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D50744EE-3E16-4A08-B50B-B113C3D45F8D}
