@@ -3,11 +3,13 @@ using ReactCRUD.Core.Domain;
 using System.Collections.Generic;
 
 
+
 namespace ReactCRUD.Data
 {
     public class ReactCRUDContext : DbContext
     {
-        public ReactCRUDContext(DbContextOptions<ReactCRUDContext> options) : base(options)
+        public ReactCRUDContext(DbContextOptions<ReactCRUDContext> options)
+        : base(options) 
         {
         }
 

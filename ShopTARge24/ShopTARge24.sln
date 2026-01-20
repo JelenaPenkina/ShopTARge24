@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Core", "..\ReactC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.Data", "..\ReactCRUD\ReactCRUD.Data\ReactCRUD.Data.csproj", "{55BD880D-AB24-45C8-874B-6613DB824FB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactCRUD.ApplicationServices", "..\ReactCRUD\ReactCRUD.ApplicationServices\ReactCRUD.ApplicationServices.csproj", "{8064479A-D94B-49F4-B001-C95933E65141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55BD880D-AB24-45C8-874B-6613DB824FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8064479A-D94B-49F4-B001-C95933E65141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8064479A-D94B-49F4-B001-C95933E65141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8064479A-D94B-49F4-B001-C95933E65141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8064479A-D94B-49F4-B001-C95933E65141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{75EFE582-DFAD-4355-8AF3-9214A90C6854} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
 		{4D805CE9-5691-4F14-888C-BADCCA684ED0} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
 		{55BD880D-AB24-45C8-874B-6613DB824FB7} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
+		{8064479A-D94B-49F4-B001-C95933E65141} = {FE881764-E42C-443C-B5C7-CA083CB5AC21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D50744EE-3E16-4A08-B50B-B113C3D45F8D}
